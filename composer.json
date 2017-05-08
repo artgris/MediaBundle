@@ -25,7 +25,7 @@
   },
   "autoload": {
     "psr-0": {
-      "Artgris\\Bundle\\MediaBundle": ""
+      "Artgris\\Bundle\\MediaBundle\\": ""
     }
   }
 }
