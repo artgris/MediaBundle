@@ -107,7 +107,6 @@
 
 .artgris-media .td-label label {
     text-overflow: ellipsis;
-    overflow: hidden;
 }
 
 .artgris-media .table-sort {
