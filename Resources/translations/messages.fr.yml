@@ -1,0 +1,7 @@
+artgris.delete: 'Supprimer'
+Path: 'Chemin :'
+File: 'Fichier'
+Alt: 'Alt :'
+Add: 'Ajouter'
+artgris.media.path.placeholder: 'Aucune image'
+artgris.media.alt.placeholder: 'Aucune description'

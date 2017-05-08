@@ -1,0 +1,3 @@
+artgris_media:
+    resource: "@ArtgrisMediaBundle/Controller/"
+    type:     annotation

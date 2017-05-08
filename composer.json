@@ -1,0 +1,31 @@
+{
+  "name": "artgris/media-bundle",
+  "type": "symfony-bundle",
+  "description": "",
+  "keywords": [
+    "symfony",
+    "media",
+    "form",
+    "doctrine",
+    "bundle"
+  ],
+  "homepage": "https://github.com/Artgris/MediaBundle",
+  "authors": [
+    {
+      "name": "Arthur Gribet",
+      "email": "a.gribet@gmail.com"
+    }
+  ],
+  "require": {
+    "php": ">=5.3.3",
+    "symfony/framework-bundle": "^3.0",
+    "doctrine/orm": "^2.5",
+    "doctrine/doctrine-bundle": "^1.6",
+    "artgris/filemanager-bundle": "^1.0.10"
+  },
+  "autoload": {
+    "psr-0": {
+      "Artgris\\Bundle\\MediaBundle": ""
+    }
+  }
+}

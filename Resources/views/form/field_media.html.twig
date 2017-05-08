@@ -1,0 +1,107 @@
+{% block artgris_media_widget %}
+
+    {% import _self as artgris %}
+
+    {% spaceless %}
+        {{ artgris.render_media(form, false, form.vars.id) }}
+    {% endspaceless %}
+
+    {% include '@ArtgrisMedia/form/_modal.html.twig' %}
+
+{% endblock %}
+
+{% block artgris_media_collection_widget %}
+
+    {% import _self as artgris %}
+
+    {% spaceless %}
+        {% if prototype is defined %}
+            {% set attr = attr|merge({'data-prototype': artgris.render_media(prototype, true, form.vars.id)}) %}
+            {% set attr = attr|merge({'data-prototype-name': prototype.vars.name}) %}
+        {% endif %}
+        {% set attr = attr|merge({'data-allow-add': allow_add ? 1 : 0}) %}
+        {% set attr = attr|merge({'data-max': data_max ? data_max : 100}) %}
+        {% set attr = attr|merge({'data-min': data_min ? data_min : 0}) %}
+        {% set attr = attr|merge({'data-init-with-n-elements': data_init_with_n_elements ? data_init_with_n_elements : 1}) %}
+        {% set attr = attr|merge({'data-add-at-the-end': data_add_at_the_end ? data_add_at_the_end : false}) %}
+        {% set attr = attr|merge({'data-allow-remove': allow_delete ? 1 : 0 }) %}
+        {% set attr = attr|merge({'data-name-prefix': full_name}) %}
+
+        <div id="{{ form.vars.id }}"
+             class="media-list artgris-media-list artgris-media-collection" {% for k, v in attr %} {{ k }}="{{ v|e }}"{% endfor %}>
+        {% for media in form %}
+            {{ artgris.render_media(media, true, form.vars.id) }}
+        {% endfor %}
+        </div>
+
+        {% include '@ArtgrisMedia/form/_modal.html.twig' %}
+
+    {% endspaceless %}
+
+{% endblock %}
+
+{% macro render_media(form, collection = true, id) %}
+    {% spaceless %}
+        <div class="artgris-media">
+            <div class="row">
+                {% if collection %}
+                    <div class="col-sm-1">
+                        <table class="table-sort">
+                            <tr class="table-sort-up">
+                                <td><a href="#" class="collection-up btn btn-default btn-x-sm"><span
+                                                class="fa fa-chevron-up"></span></a></td>
+                            </tr>
+                            <tr class="table-sort-down">
+                                <td><a href="#" class="collection-down btn btn-default btn-x-sm"><span
+                                                class="fa fa-chevron-down"></span></a></td>
+                            </tr>
+                        </table>
+                    </div>
+                {% endif %}
+
+                <div class="img-preview col-sm-2" id="preview{{ form.path.vars.id }}">
+                    {{ fileIcon(form.path.vars.data).html|raw }}
+                </div>
+
+                <div class="img-description {% if collection %}col-sm-9 img-description-collection {% else %}col-sm-10{% endif %}">
+                    <table>
+                        <tr>
+                            <td class="td-label td-path">{{ form_label(form.path, null, {label_attr: {class: 'control-label'}}) }}</td>
+                            <td>{{ form_widget(form.path, {attr: {class: 'artgris-media-path'}}) }}</td>
+                        </tr>
+
+                        {% if form.vars.allow_alt %}
+                            <tr>
+                                <td class="td-label">{{ form_label(form.alt, null, {label_attr: {class: 'control-label'}}) }}</td>
+                                <td>{{ form_widget(form.alt, {attr: {class: 'artgris-media-alt'}}) }}</td>
+                            </tr>
+                        {% endif %}
+                    </table>
+
+                    {% if collection %}
+                        {% include '@ArtgrisMedia/form/_btn_manager.html.twig' with {'id' : id, 'form' : form} only %}
+                    {% else %}
+                        <div class="upload {% if not form.vars.allow_alt %}upload-no-alt{% endif %}">
+                            <div class="btn-group artgris-browse-group" role="group">
+                                <button class="btn btn-danger btn-sm artgris-media-button-erase" type="button"><span
+                                            class="fa fa-remove"></span></button>
+                                {% include '@ArtgrisMedia/form/_btn_manager.html.twig' with {'id' : id, 'form' : form} only %}
+                            </div>
+                        </div>
+                    {% endif %}
+
+                    {% if collection %}
+                        <div class="actions pull-right">
+                            <a href="#" class="js-remove-collection btn btn-danger collection-remove collection-action"><span
+                                        class="fa fa-remove"></span></a>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="col-m-12 text-center">
+                <progress></progress>
+            </div>
+        </div>
+    {% endspaceless %}
+{% endmacro %}
