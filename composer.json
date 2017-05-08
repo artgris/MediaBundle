@@ -24,7 +24,7 @@
     "artgris/filemanager-bundle": "^1.0.10"
   },
   "autoload": {
-    "psr-0": {
+    "psr-4": {
       "Artgris\\Bundle\\MediaBundle\\": ""
     }
   }
