@@ -13,9 +13,11 @@ $(function () {
         .on('click', '.artgris-media-button-erase', function (e) {
             e.preventDefault();
             e.stopPropagation();
-            var $imagePath = $(this).closest('.artgris-media').find('.artgris-media-path');
+            var $artgrisMedia = $(this).closest('.artgris-media');
+            var $imagePath = $artgrisMedia.find('.artgris-media-path');
             $imagePath.val('');
             $imagePath.change();
+            $artgrisMedia.find('.img-preview').html('');
         });
 
 
@@ -49,8 +51,71 @@ $(function () {
             min: $this.data('min'),
             init_with_n_elements: $this.data('init-with-n-elements'),
             add: '<span class="images-add"><a href="#" class="btn btn-default"><span class="fa fa-plus"></span> ' + addStr + '</a></span>',
-            add_at_the_end: $this.data('add-at-the-end')
-        });
+            add_at_the_end: $this.data('add-at-the-end'),
+            after_add: function (collection, element) {
+                initFileUpload(element.find('.fileupload'));
+                return true;
+            },
+            before_remove: function (collection, element) {
+                $(element.find('.fileupload')).fileupload('destroy');
+                return true;
+            }
+        })
     });
 
+    var media = '.artgris-media';
+
+    $document.on('dragover dragenter', media, function () {
+        $(this).addClass('is-dragover');
+    })
+        .on('dragleave dragend drop', media, function () {
+            $(this).removeClass('is-dragover');
+        });
+
+    // filemanager
+    initFileUpload('.fileupload.alone');
+    initFileUpload('.ui-sortable-handle .fileupload');
+
+    function initFileUpload(selector) {
+        $(selector).each(function () {
+            $(this).fileupload({
+                dataType: 'json',
+                processQueue: false,
+                dropZone: $(this).closest('.artgris-media')
+            }).on('fileuploaddone', function (e, data) {
+                $.each(data.result.files, function (index, file) {
+                    if (file.url) {
+                        // Ajax update view
+                        $.ajax({
+                            dataType: "json",
+                            url: url,
+                            type: 'GET'
+                        }).done(function (data) {
+                            displaySuccess('<strong>' + file.name + '</strong> ' + successMessage);
+                            var $input = $(e.target).closest('.artgris-media').find('input.artgris-media-path');
+                            $input.val(file.url);
+                            //update preview
+                            updatePreview(file.url, $('#preview' + $input.attr('id')));
+
+                            // update iframe
+                            $('.iframe').attr('src', function (i, val) {
+                                return val;
+                            });
+                        }).fail(function (jqXHR, textStatus, errorThrown) {
+                            displayError('<strong>Ajax call error :</strong> ' + jqXHR.status + ' ' + errorThrown)
+                        });
+
+                    } else if (file.error) {
+                        displayError('<strong>' + file.name + '</strong> ' + file.error)
+                    }
+                });
+            }).on('fileuploadfail', function (e, data) {
+                $.each(data.files, function (index) {
+                    displayError('File upload failed.')
+                });
+            })
+            ;
+        });
+
+    }
 });
