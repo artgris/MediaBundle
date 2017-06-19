@@ -3,7 +3,7 @@
 </button>
 <span class="btn btn-success btn-sm fileinput-button">
     <i class="glyphicon glyphicon-plus"></i>
-    <input class="fileupload" type="file"
+    <input class="fileupload {{ collection is defined ? 'alone' }}" type="file"
            data-url="{{ path('file_manager_upload', {conf:conf}) }}"
            name="files[]" multiple=""
             {#accept="{{ fileManager.configuration.accept is defined ? fileManager.configuration.accept : (fileManager.type ? accept(fileManager.type)) }}#}

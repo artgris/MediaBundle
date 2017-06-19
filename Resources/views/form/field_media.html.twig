@@ -16,7 +16,7 @@
 
     {% spaceless %}
         {% if prototype is defined %}
-            {% set attr = attr|merge({'data-prototype': artgris.render_media(prototype, true, form.vars.id)}) %}
+            {% set attr = attr|merge({'data-prototype': artgris.render_media(prototype, true, form.vars.id, conf)}) %}
             {% set attr = attr|merge({'data-prototype-name': prototype.vars.name}) %}
         {% endif %}
         {% set attr = attr|merge({'data-allow-add': allow_add ? 1 : 0}) %}
@@ -85,7 +85,7 @@
                     {% else %}
                         <div class="upload {% if not form.vars.allow_alt %}upload-no-alt{% endif %}">
                             <div class="btn-group artgris-browse-group" role="group">
-                                {% include '@ArtgrisMedia/form/_btn_manager.html.twig' with {'id' : id, 'form' : form, 'conf': conf} only %}
+                                {% include '@ArtgrisMedia/form/_btn_manager.html.twig' with {'id' : id, 'form' : form, 'conf': conf, 'collection': false} only %}
                             </div>
                         </div>
                     {% endif %}
