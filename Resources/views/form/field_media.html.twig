@@ -3,7 +3,7 @@
     {% import _self as artgris %}
 
     {% spaceless %}
-        {{ artgris.render_media(form, false, form.vars.id) }}
+        {{ artgris.render_media(form, false, form.vars.id, conf) }}
     {% endspaceless %}
 
     {% include '@ArtgrisMedia/form/_modal.html.twig' %}
@@ -30,7 +30,7 @@
         <div id="{{ form.vars.id }}"
              class="media-list artgris-media-list artgris-media-collection" {% for k, v in attr %} {{ k }}="{{ v|e }}"{% endfor %}>
         {% for media in form %}
-            {{ artgris.render_media(media, true, form.vars.id) }}
+            {{ artgris.render_media(media, true, form.vars.id, conf) }}
         {% endfor %}
         </div>
 
@@ -40,7 +40,7 @@
 
 {% endblock %}
 
-{% macro render_media(form, collection = true, id) %}
+{% macro render_media(form, collection = true, id, conf) %}
     {% spaceless %}
         <div class="artgris-media">
             <div class="row">
@@ -79,17 +79,16 @@
                     </table>
 
                     {% if collection %}
-                        {% include '@ArtgrisMedia/form/_btn_manager.html.twig' with {'id' : id, 'form' : form} only %}
+                        <div class="btn-group" role="group">
+                            {% include '@ArtgrisMedia/form/_btn_manager.html.twig' with {'id' : id, 'form' : form, 'conf': conf} only %}
+                        </div>
                     {% else %}
                         <div class="upload {% if not form.vars.allow_alt %}upload-no-alt{% endif %}">
                             <div class="btn-group artgris-browse-group" role="group">
-                                <button class="btn btn-danger btn-sm artgris-media-button-erase" type="button"><span
-                                            class="fa fa-remove"></span></button>
-                                {% include '@ArtgrisMedia/form/_btn_manager.html.twig' with {'id' : id, 'form' : form} only %}
+                                {% include '@ArtgrisMedia/form/_btn_manager.html.twig' with {'id' : id, 'form' : form, 'conf': conf} only %}
                             </div>
                         </div>
                     {% endif %}
-
                     {% if collection %}
                         <div class="actions pull-right">
                             <a href="#" class="js-remove-collection btn btn-danger collection-remove collection-action"><span

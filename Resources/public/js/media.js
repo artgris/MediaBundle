@@ -53,4 +53,42 @@ $(function () {
         });
     });
 
+
+    // filemanager
+
+
+    // file upload
+    $('.fileupload').fileupload({
+        dataType: 'json',
+        processQueue: false,
+        // dropZone: $('.dropzone')
+    }).on('fileuploaddone', function (e, data) {
+        $.each(data.result.files, function (index, file) {
+            if (file.url) {
+                // Ajax update view
+                $.ajax({
+                    dataType: "json",
+                    url: url,
+                    type: 'GET'
+                }).done(function (data) {
+                    displaySuccess('<strong>' + file.name + '</strong> ' + successMessage)
+                    e.target.parent().parent().find('input.artgris-media-path').val(file.name)
+
+                    // update iframe
+                    $('.modal .iframe').attr('src', function (i, val) {
+                        return val;
+                    });
+                }).fail(function (jqXHR, textStatus, errorThrown) {
+                    displayError('<strong>Ajax call error :</strong> ' + jqXHR.status + ' ' + errorThrown)
+                });
+
+            } else if (file.error) {
+                displayError('<strong>' + file.name + '</strong> ' + file.error)
+            }
+        });
+    }).on('fileuploadfail', function (e, data) {
+        $.each(data.files, function (index) {
+            displayError('File upload failed.')
+        });
+    });
 });
