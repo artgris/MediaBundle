@@ -1,7 +1,10 @@
 .artgris-media {
     transition: box-shadow 200ms, background-color 200ms;
     background-color: rgba(255, 255, 255, 0.85);
-    border: 1px solid transparent;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    border: 1px solid #cccccc;
+    margin-bottom: 5px;
 }
 
 .artgris-media-collection .artgris-media {
