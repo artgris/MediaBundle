@@ -57,6 +57,9 @@ class Media implements JsonSerializable
         ];
     }
 
+    /**
+     * @return string
+     */
     public function getFilePath()
     {
         $path = urldecode($this->path);
