@@ -1,6 +1,5 @@
 $(function () {
 
-
     var $document = $(document);
     var $artgrisPath;
     var $artgrisTarget;
@@ -18,31 +17,24 @@ $(function () {
             $imagePath.val('');
             $imagePath.change();
             $artgrisMedia.find('.img-preview').html('');
-        });
+        })
+        .on('shown.bs.modal', '.modal', function() {
+            console.log("show");
+            var $iframe = $(this).find('.iframe');
+            $iframe.on('load', function () {
+                applyIFrameEvents($this);
+            });
+            applyIFrameEvents($iframe);
 
-
-    $('.iframe').on('load', function () {
-        $(this).contents().on('click', '.file .select', function () {
-            var path = $(this).attr('data-path');
-            $('#' + $artgrisPath).val(path);
-            updatePreview(path, $('#preview' + $artgrisPath));
-            $($artgrisTarget).modal('hide')
-        });
-    });
-
-    function updatePreview(path, dest) {
-        $.ajax({
-            url: url,
-            data: {'path': path},
-            type: 'GET',
-            success: function (res) {
-                dest.html(res.icon.html)
-            },
-            error: function () {
-                alert('Une erreur est survenue');
+            function applyIFrameEvents($iframe) {
+                $iframe.contents().on('click', '.file .select', function () {
+                    var path = $(this).attr('data-path');
+                    $('#' + $artgrisPath).val(path);
+                    updatePreview(path, $('#preview' + $artgrisPath));
+                    $($artgrisTarget).modal('hide')
+                });
             }
         });
-    }
 
     $('.artgris-media-collection').each(function () {
         var $this = $(this);
@@ -76,46 +68,60 @@ $(function () {
     initFileUpload('.fileupload.alone');
     initFileUpload('.ui-sortable-handle .fileupload');
 
-    function initFileUpload(selector) {
-        $(selector).each(function () {
-            $(this).fileupload({
-                dataType: 'json',
-                processQueue: false,
-                dropZone: $(this).closest('.artgris-media')
-            }).on('fileuploaddone', function (e, data) {
-                $.each(data.result.files, function (index, file) {
-                    if (file.url) {
-                        // Ajax update view
-                        $.ajax({
-                            dataType: "json",
-                            url: url,
-                            type: 'GET'
-                        }).done(function (data) {
-                            displaySuccess('<strong>' + file.name + '</strong> ' + successMessage);
-                            var $input = $(e.target).closest('.artgris-media').find('input.artgris-media-path');
-                            $input.val(file.url);
-                            //update preview
-                            updatePreview(file.url, $('#preview' + $input.attr('id')));
-
-                            // update iframe
-                            $('.iframe').attr('src', function (i, val) {
-                                return val;
-                            });
-                        }).fail(function (jqXHR, textStatus, errorThrown) {
-                            displayError('<strong>Ajax call error :</strong> ' + jqXHR.status + ' ' + errorThrown)
-                        });
-
-                    } else if (file.error) {
-                        displayError('<strong>' + file.name + '</strong> ' + file.error)
-                    }
-                });
-            }).on('fileuploadfail', function (e, data) {
-                $.each(data.files, function (index) {
-                    displayError('File upload failed.')
-                });
-            })
-            ;
-        });
-
-    }
 });
+
+function updatePreview(path, dest) {
+    $.ajax({
+        url: url,
+        data: {'path': path},
+        type: 'GET',
+        success: function (res) {
+            dest.html(res.icon.html)
+        },
+        error: function () {
+            alert('Une erreur est survenue');
+        }
+    });
+}
+
+function initFileUpload(selector) {
+    $(selector).each(function () {
+        $(this).fileupload({
+            dataType: 'json',
+            processQueue: false,
+            dropZone: $(this).closest('.artgris-media')
+        }).on('fileuploaddone', function (e, data) {
+            $.each(data.result.files, function (index, file) {
+                if (file.url) {
+                    // Ajax update view
+                    $.ajax({
+                        dataType: "json",
+                        url: url,
+                        type: 'GET'
+                    }).done(function (data) {
+                        displaySuccess('<strong>' + file.name + '</strong> ' + successMessage);
+                        var $input = $(e.target).closest('.artgris-media').find('input.artgris-media-path');
+                        $input.val(file.url);
+                        //update preview
+                        updatePreview(file.url, $('#preview' + $input.attr('id')));
+
+                        // update iframe
+                        $('.iframe').attr('src', function (i, val) {
+                            return val;
+                        });
+                    }).fail(function (jqXHR, textStatus, errorThrown) {
+                        displayError('<strong>Ajax call error :</strong> ' + jqXHR.status + ' ' + errorThrown)
+                    });
+
+                } else if (file.error) {
+                    displayError('<strong>' + file.name + '</strong> ' + file.error)
+                }
+            });
+        }).on('fileuploadfail', function (e, data) {
+            $.each(data.files, function (index) {
+                displayError('File upload failed.')
+            });
+        })
+        ;
+    });
+}
