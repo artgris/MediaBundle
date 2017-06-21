@@ -59,10 +59,11 @@ class Media implements JsonSerializable
 
     public function getFilePath()
     {
-        if (!empty($this->path) && $this->path[0] === '/') {
-            return substr($this->path, 1);
+        $path = urldecode($this->path);
+        if (!empty($path) && $path[0] === '/') {
+            return substr($path, 1);
         }
-        return $this->path;
+        return $path;
     }
 
     public function __toString()
