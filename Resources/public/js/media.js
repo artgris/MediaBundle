@@ -22,7 +22,7 @@ $(function () {
             console.log("show");
             var $iframe = $(this).find('.iframe');
             $iframe.on('load', function () {
-                applyIFrameEvents($this);
+                applyIFrameEvents($(this));
             });
             applyIFrameEvents($iframe);
 
