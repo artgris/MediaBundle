@@ -18,7 +18,7 @@ $(function () {
             $imagePath.change();
             $artgrisMedia.find('.img-preview').html('');
         })
-        .on('shown.bs.modal', '.modal', function() {
+        .on('shown.bs.modal', '.modal.artgris-media-modal', function() {
             var $iframe = $(this).find('.iframe');
             $iframe.on('load', function () {
                 applyIFrameEvents($(this));
