@@ -21,7 +21,7 @@ $(function () {
         .on('shown.bs.modal', '.modal.artgris-media-modal', function() {
             var $iframe = $(this).find('.iframe');
             $iframe.on('load', function () {
-                applyIFrameEvents($this);
+                applyIFrameEvents($(this));
             });
             applyIFrameEvents($iframe);
 
