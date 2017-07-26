@@ -96,6 +96,7 @@ You can bound these fields to a form using its corresponding type:
 **MediaCollectionType:**
 
 - `'conf' => 'yourconf'` (**required**) specifies a configuration defined in the FileManager. For more informations about media configurations, [refer to FileManagerBundle's documentation](https://github.com/artgris/FileManagerBundle#add-following-configuration-)
+
 Some [ninsuo/symfony-collection](https://github.com/ninsuo/symfony-collection)'s options are available directly:
 - `'min' => 0`
 - `'max' => 100`
