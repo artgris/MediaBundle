@@ -51,7 +51,7 @@ class MediaCollectionType extends JsonArrayType
     public function convertToPHPValue($value, AbstractPlatform $platform)
     {
         if (empty($value)) {
-            return new ArrayCollection([new Media()]);
+            return null;
         }
 
         $value = (is_resource($value)) ? stream_get_contents($value) : $value;
