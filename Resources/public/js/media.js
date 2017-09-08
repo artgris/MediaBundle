@@ -18,6 +18,11 @@ $(function () {
             $imagePath.change();
             $artgrisMedia.find('.img-preview').html('');
         })
+        .on('change', '.artgris-media-path', function (e) {
+            var path = $(this).val();
+            var id = $(this).attr('id');
+            updatePreview(path, $('#preview' + id));
+        })
         .on('shown.bs.modal', '.modal.artgris-media-modal', function() {
             var $iframe = $(this).find('.iframe');
             $iframe.on('load', function () {
