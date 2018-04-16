@@ -8,6 +8,10 @@ $(function () {
         .on('click', '.btn-manager', function () {
             $artgrisPath = $(this).attr('data-id');
             $artgrisTarget = $(this).attr('data-target');
+            var $iframe = $($artgrisTarget).find('.iframe');
+            if (!$iframe.attr('src')) {
+                $iframe.attr('src', $iframe.data('src'));
+            }
         })
         .on('click', '.artgris-media-button-erase', function (e) {
             e.preventDefault();
@@ -129,3 +133,4 @@ function initFileUpload(selector) {
         ;
     });
 }
+
