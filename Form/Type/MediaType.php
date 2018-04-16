@@ -45,7 +45,8 @@ class MediaType extends AbstractType
             'allow_alt' => true,
             'path_readonly' => false,
             'conf' => false,
-            'tree' => 0
+            'tree' => 0,
+            'error_bubbling' => false
         ]);
     }
 

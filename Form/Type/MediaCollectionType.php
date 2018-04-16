@@ -38,7 +38,8 @@ class MediaCollectionType extends CollectionType
             'init_with_n_elements' => 1,
             'add_at_the_end' => true,
             'conf' => false,
-            'tree' => 0
+            'tree' => 0,
+            'error_bubbling' => false
         ]);
 
         $resolver->setNormalizer('entry_options', $entryOptionsNormalizer);

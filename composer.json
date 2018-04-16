@@ -18,10 +18,9 @@
   ],
   "require": {
     "php": ">=5.3.3",
-    "symfony/framework-bundle": "^3.0",
     "doctrine/orm": "^2.5",
     "doctrine/doctrine-bundle": "^1.6",
-    "artgris/filemanager-bundle": "^1.0.10"
+    "artgris/filemanager-bundle": "^1.0 || dev-master"
   },
   "autoload": {
     "psr-4": {
