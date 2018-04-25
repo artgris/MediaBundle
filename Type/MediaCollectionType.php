@@ -23,10 +23,6 @@ class MediaCollectionType extends JsonArrayType
      */
     public function convertToDatabaseValue($value, AbstractPlatform $platform)
     {
-        if (empty($value)) {
-            return null;
-        }
-
         if (is_array($value)) {
             $value = new ArrayCollection($value);
         }
@@ -38,10 +34,6 @@ class MediaCollectionType extends JsonArrayType
             }
         }
 
-        if ($value->isEmpty()) {
-            return null;
-        }
-        
         return json_encode($value->toArray());
     }
 
