@@ -52,14 +52,14 @@ class MediaCollectionType extends JsonArrayType
 
         $res = new ArrayCollection();
         foreach ($json as $el) {
-            $image = new Media();
-
-            if (isset($el['alt'])) {
-                $image->setAlt($el['alt']);
+            if (!isset($el['path'])) {
+                continue;
             }
 
-            if (isset($el['path'])) {
-                $image->setPath($el['path']);
+            $image = new Media();
+            $image->setPath($el['path']);
+            if (isset($el['alt'])) {
+                $image->setAlt($el['alt']);
             }
 
             $res->add($image);

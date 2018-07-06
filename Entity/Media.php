@@ -7,7 +7,6 @@ use JsonSerializable;
 class Media implements JsonSerializable
 {
 
-
     /** @var string */
     private $path;
     

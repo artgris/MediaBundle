@@ -96,6 +96,11 @@
                         </div>
                     {% endif %}
                 </div>
+                {% if form.vars.errors|length > 0 %}
+                    <div class="col-md-12 margin">
+                        {{ form_errors(form) }}
+                    </div>
+                {% endif %}
             </div>
 
             <div class="col-m-12 text-center">
