@@ -7,7 +7,7 @@ use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 
-class ImageValidator extends ConstraintValidator
+class NotEmptyValidator extends ConstraintValidator
 {
 
     public function validate($value, Constraint $constraint)

@@ -9,7 +9,7 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 /**
  * @Annotation
  */
-class Image extends Constraint
+class NotEmpty extends Constraint
 {
 
     public $message = 'artgris_validation.not_blank';
