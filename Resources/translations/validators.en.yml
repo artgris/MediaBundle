@@ -1,0 +1,3 @@
+artgris_validation:
+    image: 'This field must be an image.'
+    not_blank: 'This field must not be empty.'
