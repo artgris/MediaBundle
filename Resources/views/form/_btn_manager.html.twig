@@ -9,8 +9,10 @@
             {#accept="{{ fileManager.configuration.accept is defined ? fileManager.configuration.accept : (fileManager.type ? accept(fileManager.type)) }}#}
     >
 </span>
-<button type="button" class="btn btn-default btn-sm artgris-media-button-upload  btn-manager"
-        data-id="{{ form.path.vars.id }}"
-        data-toggle="modal" data-target="#myModal{{ id }}">
-    <span class="fa fa-folder-open"></span>
-</button>
+{% if form.vars.display_file_manager %}
+    <button type="button" class="btn btn-default btn-sm artgris-media-button-upload  btn-manager"
+            data-id="{{ form.path.vars.id }}"
+            data-toggle="modal" data-target="#myModal{{ id }}">
+        <span class="fa fa-folder-open"></span>
+    </button>
+{% endif %}

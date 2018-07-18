@@ -106,7 +106,8 @@ Some [ninsuo/symfony-collection](https://github.com/ninsuo/symfony-collection)'s
 Like regular collections, you can edit entries options, i.e to enable alts:
         
     'entry_options' => [
-        'allow_alt' => true
+        'allow_alt' => true,
+        'display_file_manager' => false
     ]
 
 ### About the form HTML theme

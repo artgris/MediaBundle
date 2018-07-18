@@ -93,44 +93,62 @@ function updatePreview(path, dest) {
 }
 
 function initFileUpload(selector) {
-    $(selector).each(function () {
+    var $this = $(selector);
+    $this.each(function () {
         $(this).fileupload({
             dataType: 'json',
             processQueue: false,
             dropZone: $(this).closest('.artgris-media')
         }).on('fileuploaddone', function (e, data) {
+            var $unusedPaths;
             $.each(data.result.files, function (index, file) {
                 if (file.url) {
                     // Ajax update view
-                    $.ajax({
-                        dataType: "json",
-                        url: url,
-                        type: 'GET'
-                    }).done(function (data) {
-                        displaySuccess('<strong>' + file.name + '</strong> ' + successMessage);
-                        var $input = $(e.target).closest('.artgris-media').find('input.artgris-media-path');
-                        $input.val(file.url);
-                        //update preview
-                        updatePreview(file.url, $('#preview' + $input.attr('id')));
+                    displaySuccess('<strong>' + file.name + '</strong> ' + successMessage);
 
-                        // update iframe
-                        $('.iframe').attr('src', function (i, val) {
-                            return val;
+                    var $input = null;
+                    if (data.originalFiles.length > 1) {
+                        $unusedPaths = $(e.target).closest('.artgris-media-collection').find('input.artgris-media-path').filter(function() {
+                            return !this.value;
                         });
-                    }).fail(function (jqXHR, textStatus, errorThrown) {
-                        displayError('<strong>Ajax call error :</strong> ' + jqXHR.status + ' ' + errorThrown)
-                    });
+                        if ($unusedPaths.length > 0) {
+                            $input = $unusedPaths.first();
+                        }
+                    }
 
+                    if ($input === null) {
+                        $input = $(e.target).closest('.artgris-media').find('input.artgris-media-path');
+                    }
+
+                    // Update preview
+                    $input.val(file.url);
+                    updatePreview(file.url, $('#preview' + $input.attr('id')));
+
+                    // update iframe
+                    $('.iframe').attr('src', function (i, val) {
+                        return val;
+                    });
                 } else if (file.error) {
-                    displayError('<strong>' + file.name + '</strong> ' + file.error)
+                    displayError('<strong>' + file.name + '</strong> ' + file.error);
+                    $unusedPaths = $(e.target).closest('.artgris-media-collection').find('input.artgris-media-path').filter(function() {
+                        return !this.value;
+                    });
+                    $unusedPaths.closest('.artgris-media').find('.js-remove-collection').click();
                 }
             });
         }).on('fileuploadfail', function (e, data) {
-            $.each(data.files, function (index) {
-                displayError('File upload failed.')
+            $.each(data.files, function () {
+                displayError('File upload failed.');
             });
-        })
-        ;
+        }).on('fileuploadchange', function (e, data) {
+            var $collection = $(e.target).closest('.artgris-media-collection');
+
+            if (data.files.length > 1 && $collection.length > 0) {
+                for (var i = 1; i < data.files.length; i++) {
+                    $collection.find('.images-add a').click();
+                }
+            }
+        });
     });
 }
 
