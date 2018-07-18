@@ -33,6 +33,7 @@ class MediaType extends AbstractType
             'conf' => $options['conf'],
             'tree' => $options['tree'],
             'allow_alt' => $options['allow_alt'],
+            'display_file_manager' => $options['display_file_manager'],
         ]);
     }
 
@@ -42,11 +43,12 @@ class MediaType extends AbstractType
             'required' => false,
             'data_class' => Media::class,
             'by_reference' => false,
-            'allow_alt' => true,
+            'allow_alt' => false,
             'path_readonly' => false,
             'conf' => false,
             'tree' => 0,
-            'error_bubbling' => false
+            'error_bubbling' => false,
+            'display_file_manager' => true,
         ]);
     }
 
