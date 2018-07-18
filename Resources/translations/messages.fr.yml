@@ -3,5 +3,7 @@ Path: 'Chemin :'
 File: 'Fichier'
 Alt: 'Alt :'
 Add: 'Ajouter'
+Close: 'Fermer'
+File Manager: Gestionnaire de fichiers
 artgris.media.path.placeholder: 'Aucun document'
 artgris.media.alt.placeholder: 'Aucune description'

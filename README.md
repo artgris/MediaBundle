@@ -103,7 +103,7 @@ Some [ninsuo/symfony-collection](https://github.com/ninsuo/symfony-collection)'s
 - `'init_with_n_elements' => 1`
 - `'add_at_the_end' => true`
 
-Like regular collections, you can edit entries options, i.e to disable alts:
+Like regular collections, you can edit entries options, i.e to enable alts:
         
     'entry_options' => [
         'allow_alt' => true,
@@ -117,3 +117,17 @@ Include bootstrap's theme
     {% form_theme form ':admin/includes:bootstrap_3_layout.html.twig' %}
 
 To override the widget theme, check `Resources/views/forms/fields.html.twig`.
+
+### Constraints example
+
+    use Artgris\Bundle\MediaBundle\Form\Validator\Constraint as MediaAssert;
+
+    // ...
+
+    /**
+     * @var ArrayCollection|Media[]
+     * @ORM\Column(type="media_collection")
+     * @MediaAssert\Count(min="2")
+     * @Assert\All({@MediaAssert\Image()})
+     */
+    private $images;
