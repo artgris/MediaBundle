@@ -13,6 +13,7 @@ class NotEmptyValidator extends ConstraintValidator
     public function validate($value, Constraint $constraint)
     {
         if (null === $value) {
+            $this->context->buildViolation($constraint->message)->addViolation();
             return;
         }
 
