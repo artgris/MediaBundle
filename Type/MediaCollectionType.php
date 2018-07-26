@@ -49,6 +49,9 @@ class MediaCollectionType extends JsonArrayType
         $value = (is_resource($value)) ? stream_get_contents($value) : $value;
 
         $json = json_decode($value, true);
+        if ($json === null) {
+            return null;
+        }
 
         $res = new ArrayCollection();
         foreach ($json as $el) {
