@@ -1,12 +1,11 @@
-<button class="btn btn-danger btn-sm artgris-media-button-erase" type="button">
-    <span class="fa fa-eraser"></span>
+<button class="btn btn-sm artgris-media-button-erase" type="button">
+    <span class="fa fa-eraser text-danger"></span>
 </button>
-<span class="btn btn-success btn-sm fileinput-button">
-    <span class="fa fa-plus"></span>
+<span class="btn btn-sm fileinput-button">
+    <span class="fa fa-plus text-success"></span>
     <input class="fileupload {{ collection is defined ? 'alone' }}" type="file"
            data-url="{{ path('file_manager_upload', {conf:conf}) }}"
            name="files[]" multiple=""
-            {#accept="{{ fileManager.configuration.accept is defined ? fileManager.configuration.accept : (fileManager.type ? accept(fileManager.type)) }}#}
     >
 </span>
 {% if form.vars.display_file_manager %}
