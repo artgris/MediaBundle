@@ -43,6 +43,12 @@
 {% macro render_media(form, collection = true, id, conf) %}
     {% spaceless %}
         <div class="artgris-media">
+            {% if collection %}
+                <div class="actions pull-right">
+                    <a href="#" class="js-remove-collection btn btn-danger collection-remove collection-action"><span
+                                class="fa fa-remove"></span></a>
+                </div>
+            {% endif %}
             <div class="row">
                 {% if collection %}
                     <div class="col-sm-1">
@@ -89,12 +95,6 @@
                             </div>
                         </div>
                     {% endif %}
-                    {% if collection %}
-                        <div class="actions pull-right">
-                            <a href="#" class="js-remove-collection btn btn-danger collection-remove collection-action"><span
-                                        class="fa fa-remove"></span></a>
-                        </div>
-                    {% endif %}
                 </div>
                 {% if collection and form.vars.errors|length > 0 %}
                     <div class="col-md-12 margin">
@@ -102,7 +102,6 @@
                     </div>
                 {% endif %}
             </div>
-
             <div class="col-m-12 text-center">
                 <progress></progress>
             </div>
