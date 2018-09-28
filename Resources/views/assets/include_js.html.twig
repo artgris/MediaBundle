@@ -1,5 +1,6 @@
 <script>
     var url = '{{ path('admin_ajax_icon') }}';
+    var crop_url = '{{ path('admin_ajax_crop') }}';
     var addStr = '{{ 'Add'|trans }}';
     var successMessage = '{{ 'file.add.success'|trans }}';
 </script>
@@ -44,3 +45,4 @@
 <script src="{{ asset('bundles/artgrisfilemanager/libs/blueimp-file-upload/js/jquery.iframe-transport.js') }}"></script>
 <script src="{{ asset('bundles/artgrisfilemanager/libs/blueimp-file-upload/js/jquery.fileupload.js') }}"></script>
 <script src="{{ asset('bundles/artgrisfilemanager/libs/remarkable-bootstrap-notify/dist/bootstrap-notify.min.js') }}"></script>
+<script src="{{ asset('bundles/artgrismedia/libs/cropperjs-1.4.1/cropper.min.js') }}"></script>
