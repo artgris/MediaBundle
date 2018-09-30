@@ -54,6 +54,7 @@ $(function () {
             var $pathInput = $(e.relatedTarget).closest('.artgris-media').find('.artgris-media-path');
             var $cropContainer = $this.find('.modal-crop-container');
             var $modalBody = $this.find('.modal-body');
+            var ratio = $modalBody.data('ratio');
             $modalBody.show();
             $img = $('<img src="' + src + '">').css('max-width', '100%');
             $cropContainer.html('');
@@ -65,7 +66,7 @@ $(function () {
             var $jsSave = $this.find('.js-save');
 
             var cropper = new Cropper($img[0], {
-                aspectRatio: 'free',
+                aspectRatio: ratio ? ratio : 'free',
                 zoomable: true,
                 viewMode: 1,
                 crop(event) {
@@ -76,16 +77,21 @@ $(function () {
                     $jsSave.attr('disabled', (event.detail.width <= 4 || event.detail.height <= 4));
                 }
             });
-            $modalBody.find('.js-rotate-right').click(function () {
+
+            $modalBody.find('.js-rotate-right').click(function (e) {
+                e.preventDefault();
                 cropper.rotate(90);
             });
-            $modalBody.find('.js-rotate-left').click(function () {
+            $modalBody.find('.js-rotate-left').click(function (e) {
+                e.preventDefault();
                 cropper.rotate(-90);
             });
-            $modalBody.find('.js-flip-x').click(function () {
+            $modalBody.find('.js-flip-x').click(function (e) {
+                e.preventDefault();
                 cropper.scaleX(-cropper.imageData.scaleX);
             });
-            $modalBody.find('.js-flip-y').click(function () {
+            $modalBody.find('.js-flip-y').click(function (e) {
+                e.preventDefault();
                 cropper.scaleY(-cropper.imageData.scaleY);
             });
 

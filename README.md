@@ -7,6 +7,7 @@
     - CSS: [bootstrap](http://getbootstrap.com/) and [Font Awesome](http://fontawesome.io/)
     - JS: [jQuery](https://jquery.com/), [ninsuo/symfony-collection](https://github.com/ninsuo/symfony-collection) and [jQuery UI](https://jqueryui.com/)
 
+![demo-gif](https://github.com/artgris/MediaBundle/raw/master/demo.gif)
 
 ### Getting Started
 
@@ -31,16 +32,20 @@
 
             <link rel="stylesheet" href="{{ asset('bundles/artgrismedia/css/media.css') }}">
             <link rel="stylesheet" href="{{ asset('bundles/artgrisfilemanager/libs/blueimp-file-upload/css/jquery.fileupload.css') }}">
+            <link rel="stylesheet" href="{{ asset('bundles/artgrismedia/libs/cropperjs-1.4.1/cropper.min.css') }}">
 
 
     - JS (**requires [jQuery](https://jquery.com/), [ninsuo/symfony-collection](https://github.com/ninsuo/symfony-collection) and [jQuery UI](https://jqueryui.com/)**):
     
             {# Import jQuery: #}
             <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-               
+
+            {# Import fengyuanchen/cropper (included within this bundle): #}
+            <script src="/bundles/artgrismedia/libs/cropperjs-1.4.1/cropper.min.js></script>
+
             {# Then the default bundle's JavaScript: #}
             {% include '@ArtgrisMedia/assets/include_js.html.twig' %}
-            
+
 - In `routing.yml`, you will need to import the Ajax route:
         
          artgris_media:
@@ -90,8 +95,17 @@ You can bound these fields to a form using its corresponding type:
 
 **MediaType:**
 - `'conf' => 'yourconf'` (**required**) specifies a configuration defined in the FileManager. For more informations about media configurations, [refer to FileManagerBundle's documentation](https://github.com/artgris/FileManagerBundle#add-following-configuration-)
-- `'allow_alt' => true` allows the user to specify an alt
-- `'path_readonly' => false` prevents the user from manually changing the path (it only adds a "readonly" attribute to the corresponding HTML input) 
+- `'allow_alt' => false` allows the user to specify an alt
+- `'path_readonly' => false` prevents the user from manually changing the path (it only adds a "readonly" attribute to the corresponding HTML input)
+- `'allow_crop' => true` allows the user to edit the image using [fengyuanchen/cropper](https://github.com/fengyuanchen/cropper)
+- `'crop_options' => array` if `allow_crop` is set to `true`, allows to specify extra crop options. The default options:
+
+        'crop_options' => [
+            'display_crop_data' => true,    // will display crop box informations (x, y, width, height, and ratio if there is one)
+            'allow_flip' => true,           // allows to flip the image vertically and horizontally
+            'allow_rotation' => true,       // allows to rotate the image (90 degrees)
+            'ratio' => false                // force a crop ratio. E.g 16/9
+        ],
 
 **MediaCollectionType:**
 

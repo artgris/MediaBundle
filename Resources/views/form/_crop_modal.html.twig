@@ -8,24 +8,34 @@
                             aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title" id="crop-modal-label">{{ 'Image crop'|trans }}</h4>
             </div>
-            <div class="modal-body">
+            <div class="modal-body" data-ratio="{{ crop_options.ratio|default }}">
                 <div class="buttons">
+                    {% if crop_options.allow_rotation|default(true) %}
                     <div class="btn-group">
                         <a href="#" class="btn btn-default js-rotate-left"><span class="fa fa-rotate-left"></span></a>
                         <a href="#" class="btn btn-default js-rotate-right"><span class="fa fa-rotate-right"></span></a>
                     </div>
-                    <div class="btn-group">
-                        <a href="#" class="btn btn-default js-flip-x"><span class="fa fa-arrows-h"></span></a>
-                        <a href="#" class="btn btn-default js-flip-y"><span class="fa fa-arrows-v"></span></a>
-                    </div>
+                    {% endif %}
 
-                    <div class="text-right">
-                        x: <span class="js-x">0</span>
-                        y: <span class="js-y">0</span>
-                        {{ 'width:'|trans }} <span class="js-width">0</span>
-                        {{ 'height:'|trans }} <span class="js-height">0</span>
+                    {% if crop_options.allow_flip|default(true) %}
+                        <div class="btn-group">
+                            <a href="#" class="btn btn-default js-flip-x"><span class="fa fa-arrows-h"></span></a>
+                            <a href="#" class="btn btn-default js-flip-y"><span class="fa fa-arrows-v"></span></a>
+                        </div>
+                    {% endif %}
+
+                    {% if crop_options.display_crop_data|default(true) %}
+                        <div class="pull-right image-data">
+                            {% for el in ['x', 'y', 'width', 'height'] %}
+                                <span class="label"> {{ (el ~ ':')|capitalize|trans}} <span class="js-{{ el }}">0</span></span>
+                            {% endfor %}
+                            {% if crop_options.ratio|default %}
+                                <span class="label label-primary"> {{ 'Ratio: '|trans ~ crop_options.ratio|round(2) }}  </span>
+                            {% endif %}
+                        </div>
+                    {% endif %}
+
                     </div>
-                </div>
 
                 <div class="modal-crop-container"></div>
             </div>

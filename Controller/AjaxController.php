@@ -82,7 +82,7 @@ class AjaxController extends Controller
             if ($cropPos !== false) {
                 $filename = substr($filename, 0, $cropPos);
             }
-            $savedPath = $image->save($rootdir . DIRECTORY_SEPARATOR . $destinationFolder . 'cropped' . DIRECTORY_SEPARATOR . urldecode($filename) . $cropStrAdd . uniqid() . '.' . $extension, 'guess', 85);
+            $savedPath = $image->save($rootdir . DIRECTORY_SEPARATOR . $destinationFolder . 'cropped/' . urldecode($filename) . $cropStrAdd . uniqid() . '.' . $extension, 'guess', 85);
 
             $savedPath = substr($savedPath, strlen($baseUrl));
             if ($savedPath[0] !== '/') {

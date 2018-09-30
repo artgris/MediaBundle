@@ -33,6 +33,8 @@ class MediaType extends AbstractType
             'conf' => $options['conf'],
             'tree' => $options['tree'],
             'allow_alt' => $options['allow_alt'],
+            'allow_crop' => $options['allow_crop'],
+            'crop_options' => $options['crop_options'],
             'display_file_manager' => $options['display_file_manager'],
         ]);
     }
@@ -44,6 +46,13 @@ class MediaType extends AbstractType
             'data_class' => Media::class,
             'by_reference' => false,
             'allow_alt' => false,
+            'allow_crop' => true,
+            'crop_options' => [
+                'display_crop_data' => true,
+                'allow_flip' => true,
+                'allow_rotation' => true,
+                'ratio' => 16/9
+            ],
             'path_readonly' => false,
             'conf' => false,
             'tree' => 0,
