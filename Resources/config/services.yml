@@ -1,4 +1,11 @@
 services:
-#    artgris_media.example:
-#        class: Artgris\Bundle\MediaBundle\Example
-#        arguments: ["@service_id", "plain_value", "%parameter%"]
+    filemanager_configuration:
+        class: Artgris\Bundle\MediaBundle\Service\FileManagerConfigurationService
+        tags:
+            - { name: twig.extension }
+        arguments: ['@parameter_bag']
+
+#    file_type_service:
+#        class: Artgris\Bundle\FileManagerBundle\Service\FileTypeService
+#        arguments: ['@router']
+#        public: true

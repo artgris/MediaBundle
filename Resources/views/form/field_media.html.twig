@@ -7,6 +7,7 @@
     {% endspaceless %}
 
     {% include '@ArtgrisMedia/form/_modal.html.twig' %}
+    {% include '@ArtgrisMedia/form/_crop_modal.html.twig' with {crop_options: form.vars.crop_options} %}
 
 {% endblock %}
 
@@ -27,14 +28,14 @@
         {% set attr = attr|merge({'data-allow-remove': allow_delete ? 1 : 0 }) %}
         {% set attr = attr|merge({'data-name-prefix': full_name}) %}
 
-        <div id="{{ form.vars.id }}"
-             class="media-list artgris-media-list artgris-media-collection" {% for k, v in attr %} {{ k }}="{{ v|e }}"{% endfor %}>
-        {% for media in form %}
-            {{ artgris.render_media(media, true, form.vars.id, conf) }}
-        {% endfor %}
+        <div id="{{ form.vars.id }}" class="media-list artgris-media-list artgris-media-collection" {% for k, v in attr %} {{ k }}="{{ v|e }}"{% endfor %}>
+            {% for media in form %}
+                {{ artgris.render_media(media, true, form.vars.id, conf) }}
+            {% endfor %}
         </div>
 
         {% include '@ArtgrisMedia/form/_modal.html.twig' %}
+        {% include '@ArtgrisMedia/form/_crop_modal.html.twig' with {crop_options: form.vars.prototype.vars.crop_options} %}
 
     {% endspaceless %}
 
@@ -45,8 +46,7 @@
         <div class="artgris-media">
             {% if collection %}
                 <div class="actions pull-right">
-                    <a href="#" class="js-remove-collection btn btn-danger collection-remove collection-action"><span
-                                class="fa fa-remove"></span></a>
+                    <a href="#" class="js-remove-collection btn btn-danger collection-remove collection-action"><span class="fa fa-remove"></span></a>
                 </div>
             {% endif %}
             <div class="row">
@@ -54,19 +54,26 @@
                     <div class="col-sm-1">
                         <table class="table-sort">
                             <tr class="table-sort-up">
-                                <td><a href="#" class="collection-up btn btn-default btn-x-sm"><span
-                                                class="fa fa-chevron-up"></span></a></td>
+                                <td><a href="#" class="collection-up btn btn-default btn-x-sm"><span class="fa fa-chevron-up"></span></a></td>
                             </tr>
                             <tr class="table-sort-down">
-                                <td><a href="#" class="collection-down btn btn-default btn-x-sm"><span
-                                                class="fa fa-chevron-down"></span></a></td>
+                                <td><a href="#" class="collection-down btn btn-default btn-x-sm"><span class="fa fa-chevron-down"></span></a></td>
                             </tr>
                         </table>
                     </div>
                 {% endif %}
 
-                <div class="img-preview col-sm-2" id="preview{{ form.path.vars.id }}">
-                    {{ fileIcon(form.path.vars.data).html|raw }}
+                {% set base_path = get_web_path(conf) %}
+                <div class="img-preview col-sm-2" id="preview{{ form.path.vars.id }}" data-id="{{ id }}" data-conf="{{ conf }}" data-base-path="{{ base_path }}">
+                    {% set preview = fileIcon(form.path.vars.data).html %}
+                    {% if form.vars.allow_crop and '<img' in preview and '.svg' not in preview and form.path.vars.data[:base_path|length] == base_path %}
+                        <a href="#" class="js-crop crop-hover" data-toggle="modal" data-target="#crop-modal-{{ id }}">
+                            <span><i class="fa fa-crop"></i></span>
+                            {{ preview|raw }}
+                        </a>
+                    {% else %}
+                        {{ preview|raw }}
+                    {% endif %}
                 </div>
 
                 <div class="img-description {% if collection %}col-sm-9 img-description-collection {% else %}col-sm-10{% endif %}">

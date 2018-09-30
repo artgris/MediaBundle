@@ -1,0 +1,48 @@
+<!-- Modal -->
+<div class="modal fade artgris-media-crop-modal" id="crop-modal-{{ form.vars.id }}" tabindex="-1" role="dialog"
+     aria-labelledby="crop-modal-label">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="crop-modal-label">{{ 'Image crop'|trans }}</h4>
+            </div>
+            <div class="modal-body" data-ratio="{{ crop_options.ratio|default }}">
+                <div class="buttons">
+                    {% if crop_options.allow_rotation|default(true) %}
+                    <div class="btn-group">
+                        <a href="#" class="btn btn-default js-rotate-left"><span class="fa fa-rotate-left"></span></a>
+                        <a href="#" class="btn btn-default js-rotate-right"><span class="fa fa-rotate-right"></span></a>
+                    </div>
+                    {% endif %}
+
+                    {% if crop_options.allow_flip|default(true) %}
+                        <div class="btn-group">
+                            <a href="#" class="btn btn-default js-flip-x"><span class="fa fa-arrows-h"></span></a>
+                            <a href="#" class="btn btn-default js-flip-y"><span class="fa fa-arrows-v"></span></a>
+                        </div>
+                    {% endif %}
+
+                    {% if crop_options.display_crop_data|default(true) %}
+                        <div class="pull-right image-data">
+                            {% for el in ['x', 'y', 'width', 'height'] %}
+                                <span class="label"> {{ (el ~ ':')|capitalize|trans}} <span class="js-{{ el }}">0</span></span>
+                            {% endfor %}
+                            {% if crop_options.ratio|default %}
+                                <span class="label label-primary"> {{ 'Ratio: '|trans ~ crop_options.ratio|round(2) }}  </span>
+                            {% endif %}
+                        </div>
+                    {% endif %}
+
+                    </div>
+
+                <div class="modal-crop-container"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">{{ 'Cancel'|trans }}</button>
+                <button type="button" class="btn btn-primary js-save">{{ 'Apply'|trans }}</button>
+            </div>
+        </div>
+    </div>
+</div>

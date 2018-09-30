@@ -6,10 +6,10 @@ namespace Artgris\Bundle\MediaBundle\Type;
 use Artgris\Bundle\MediaBundle\Entity\Media;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\DBAL\Platforms\AbstractPlatform;
-use Doctrine\DBAL\Types\JsonArrayType;
+use Doctrine\DBAL\Types\JsonType;
 
 
-class MediaCollectionType extends JsonArrayType
+class MediaCollectionType extends JsonType
 {
     const TYPE = 'media_collection';
 

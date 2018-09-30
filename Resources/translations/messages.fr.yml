@@ -7,3 +7,11 @@ Close: 'Fermer'
 File Manager: Gestionnaire de fichiers
 artgris.media.path.placeholder: 'Aucun document'
 artgris.media.alt.placeholder: 'Aucune description'
+Apply: Appliquer
+Cancel: Annuler
+'Width:': 'Largeur :'
+'Height:': 'Hauteur :'
+'X:': 'X :'
+'Y:': 'Y :'
+'Ratio:': 'Ratio :'
+Image crop: "Racadrage d'image"

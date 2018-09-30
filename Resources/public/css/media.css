@@ -194,3 +194,67 @@
 .artgris-media-list .img-description .btn-group {
     margin-top: 12px;
 }
+
+.modal-crop-container {
+    max-width: 100%;
+    max-height: 600px;
+}
+
+.artgris-media-crop-modal .buttons {
+    margin-bottom: 10px;
+    min-height: 34px;
+}
+
+.artgris-media-crop-modal .btn-group {
+    margin-right: 10px;
+}
+
+.artgris-media-crop-modal .image-data .label {
+    margin-left: 5px;
+    margin-top: 15px;
+    background-color: #9e9e9e;
+    text-transform: none;
+}
+
+.artgris-media .crop-hover {
+    width: 100%;
+    height: 100%;
+    display: block;
+    position: relative;
+    margin: 0 10px;
+}
+
+.artgris-media .crop-hover span {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    text-align: center;
+    transition: all 350ms;
+}
+
+.artgris-media .crop-hover span:hover i {
+    opacity: 1;
+    color: white;
+    transform: scale(1);
+}
+
+.artgris-media .crop-hover span:hover {
+    background-color: rgba(0, 0, 0, 0.6);
+}
+.artgris-media .crop-hover span i.fa {
+    font-size: 30px;
+}
+
+.artgris-media .crop-hover span i {
+    opacity: 0;
+    margin-top: 20px;
+    transition: all 350ms;
+    transform: scale(0.8);
+}
+
+.artgris-media .crop-hover img:before {
+    width: 100%;
+    height: 100%;
+}

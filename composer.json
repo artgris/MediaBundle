@@ -1,7 +1,7 @@
 {
   "name": "artgris/media-bundle",
   "type": "symfony-bundle",
-  "description": "",
+  "description": "Easier Symfony Form Media Management",
   "keywords": [
     "symfony",
     "media",
@@ -14,12 +14,16 @@
     {
       "name": "Arthur Gribet",
       "email": "a.gribet@gmail.com"
+    },
+    {
+      "name": "Arkounay"
     }
   ],
   "require": {
     "php": ">=7.0.0",
     "doctrine/orm": "^2.5",
     "doctrine/doctrine-bundle": "^1.6",
+    "gregwar/image-bundle": "^2.2",
     "artgris/filemanager-bundle": "^1.0 || dev-master"
   },
   "autoload": {

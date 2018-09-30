@@ -27,7 +27,7 @@ $(function () {
             var id = $(this).attr('id');
             updatePreview(path, $('#preview' + id));
         })
-        .on('shown.bs.modal', '.modal.artgris-media-modal', function() {
+        .on('show.bs.modal', '.modal.artgris-media-modal', function() {
             var $iframe = $(this).find('.iframe');
             $iframe.on('load', function () {
                 applyIFrameEvents($(this));
@@ -42,6 +42,91 @@ $(function () {
                     $($artgrisTarget).modal('hide')
                 });
             }
+        })
+        .on('show.bs.modal', '.modal.artgris-media-crop-modal', function(e) {
+            $(this).find('.modal-body').hide();
+        })
+        .on('shown.bs.modal', '.modal.artgris-media-crop-modal', function(e) {
+            var $this = $(this);
+            var $imgPreview = $(e.relatedTarget).closest('.img-preview');
+            var src = $imgPreview.find('img').attr('src');
+            var conf = $imgPreview.data('conf');
+            var $pathInput = $(e.relatedTarget).closest('.artgris-media').find('.artgris-media-path');
+            var $cropContainer = $this.find('.modal-crop-container');
+            var $modalBody = $this.find('.modal-body');
+            var ratio = $modalBody.data('ratio');
+            $modalBody.show();
+            $img = $('<img src="' + src + '">').css('max-width', '100%');
+            $cropContainer.html('');
+            $cropContainer.append($img);
+            var $x = $this.find('.js-x');
+            var $y = $this.find('.js-y');
+            var $width = $this.find('.js-width');
+            var $height = $this.find('.js-height');
+            var $jsSave = $this.find('.js-save');
+
+            var cropper = new Cropper($img[0], {
+                aspectRatio: ratio ? ratio : 'free',
+                zoomable: true,
+                viewMode: 1,
+                crop(event) {
+                    $x.html(Math.round(event.detail.x));
+                    $y.html(Math.round(event.detail.y));
+                    $width.html(Math.round(event.detail.width));
+                    $height.html(Math.round(event.detail.height));
+                    $jsSave.attr('disabled', (event.detail.width <= 4 || event.detail.height <= 4));
+                }
+            });
+
+            $modalBody.find('.js-rotate-right').click(function (e) {
+                e.preventDefault();
+                cropper.rotate(90);
+            });
+            $modalBody.find('.js-rotate-left').click(function (e) {
+                e.preventDefault();
+                cropper.rotate(-90);
+            });
+            $modalBody.find('.js-flip-x').click(function (e) {
+                e.preventDefault();
+                cropper.scaleX(-cropper.imageData.scaleX);
+            });
+            $modalBody.find('.js-flip-y').click(function (e) {
+                e.preventDefault();
+                cropper.scaleY(-cropper.imageData.scaleY);
+            });
+
+            $jsSave.off('click');
+            $jsSave.click(function (e) {
+                e.preventDefault();
+                var data = cropper.getData();
+                $.ajax({
+                    url: crop_url,
+                    type: "post",
+                    data: {
+                        conf: conf,
+                        src: src,
+                        x: Math.round(data.x),
+                        y: Math.round(data.y),
+                        width: Math.round(data.width),
+                        height: Math.round(data.height),
+                        scaleX: data.scaleX,
+                        scaleY: data.scaleY,
+                        rotate: data.rotate,
+                        checkCrossOrigin: false
+                    },
+                    success: function (res) {
+                        cropper.destroy();
+                        $pathInput.val(res);
+                        updatePreview(res, $('#preview' + $pathInput.attr('id')));
+                        $this.modal('hide');
+                    },
+                    error: function (res) {
+                        cropper.destroy();
+                        console.error(res);
+                    }
+                });
+            });
+
         });
 
     $('.artgris-media-collection').each(function () {
@@ -68,9 +153,9 @@ $(function () {
     $document.on('dragover dragenter', media, function () {
         $(this).addClass('is-dragover');
     })
-        .on('dragleave dragend drop', media, function () {
-            $(this).removeClass('is-dragover');
-        });
+    .on('dragleave dragend drop', media, function () {
+        $(this).removeClass('is-dragover');
+    });
 
     // filemanager
     initFileUpload('.fileupload.alone');
@@ -84,7 +169,14 @@ function updatePreview(path, dest) {
         data: {'path': path},
         type: 'GET',
         success: function (res) {
-            dest.html(res.icon.html)
+            var basePath = dest.data('base-path');
+            if (res.icon.html.indexOf('<img') !== -1 && res.icon.html.indexOf('.svg') === -1 && path.indexOf(basePath) === 0) {
+                var id = dest.data('id');
+                dest.html('<a href="#" class="js-crop crop-hover" data-toggle="modal" data-target="#crop-modal-' + id + '"><span><i class="fa fa-crop"></i></span>'+res.icon.html+'</a>');
+            } else {
+                dest.html(res.icon.html);
+            }
+
         },
         error: function () {
             alert('Une erreur est survenue');
