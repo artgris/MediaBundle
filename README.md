@@ -27,69 +27,79 @@
     
     - CSS (**requires [bootstrap](http://getbootstrap.com/) and [Font Awesome](http://fontawesome.io/)**):
         
-            {# Font Awesome #}
-            <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+```twig
+{# Font Awesome #}
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
-            <link rel="stylesheet" href="{{ asset('bundles/artgrismedia/css/media.css') }}">
-            <link rel="stylesheet" href="{{ asset('bundles/artgrisfilemanager/libs/blueimp-file-upload/css/jquery.fileupload.css') }}">
-            <link rel="stylesheet" href="{{ asset('bundles/artgrismedia/libs/cropperjs-1.4.1/cropper.min.css') }}">
+<link rel="stylesheet" href="{{ asset('bundles/artgrismedia/css/media.css') }}">
+<link rel="stylesheet" href="{{ asset('bundles/artgrisfilemanager/libs/blueimp-file-upload/css/jquery.fileupload.css') }}">
+<link rel="stylesheet" href="{{ asset('bundles/artgrismedia/libs/cropperjs-1.4.1/cropper.min.css') }}">
+```
 
 
-    - JS (**requires [jQuery](https://jquery.com/), [ninsuo/symfony-collection](https://github.com/ninsuo/symfony-collection) and [jQuery UI](https://jqueryui.com/)**):
-    
-            {# Import jQuery: #}
-            <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+- JS (**requires [jQuery](https://jquery.com/), [ninsuo/symfony-collection](https://github.com/ninsuo/symfony-collection) and [jQuery UI](https://jqueryui.com/)**):
 
-            {# Import fengyuanchen/cropper (included within this bundle): #}
-            <script src="/bundles/artgrismedia/libs/cropperjs-1.4.1/cropper.min.js></script>
+```twig
+{# Import jQuery: #}
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 
-            {# Then the default bundle's JavaScript: #}
-            {% include '@ArtgrisMedia/assets/include_js.html.twig' %}
+{# Import fengyuanchen/cropper (included within this bundle): #}
+<script src="/bundles/artgrismedia/libs/cropperjs-1.4.1/cropper.min.js></script>
+
+{# Then the default bundle's JavaScript: #}
+{% include '@ArtgrisMedia/assets/include_js.html.twig' %}
+```
 
 - In `routing.yml`, you will need to import the Ajax route:
-        
-         artgris_media:
-             resource: "@ArtgrisMediaBundle/Resources/config/routing.yml"
+```yaml  
+ artgris_media:
+     resource: "@ArtgrisMediaBundle/Resources/config/routing.yml"
+```
              
 - In config.yml, add the following Doctrine types:
-
-        doctrine:
-            dbal:
-                types:
-                    media: Artgris\Bundle\MediaBundle\Type\MediaType
-                    media_collection: Artgris\Bundle\MediaBundle\Type\MediaCollectionType
+```yaml
+    doctrine:
+        dbal:
+            types:
+                media: Artgris\Bundle\MediaBundle\Type\MediaType
+                media_collection: Artgris\Bundle\MediaBundle\Type\MediaCollectionType
+```
                     
 ### Usage
     
 In an entity, you can now add the new `media` types, i.e:
     
-    /**
-     * @var Media
-     * @ORM\Column(type="media")
-     */
-    private $image;
-    
-    /**
-     * @var ArrayCollection|Media[]
-     * @ORM\Column(type="media_collection")
-     */
-    private $imageCollection;
+```php
+/**
+ * @var Media
+ * @ORM\Column(type="media")
+ */
+private $image;
 
-    public function __construct()
-    {
-        $this->imageCollection = new ArrayCollection();
-    }
+/**
+ * @var ArrayCollection|Media[]
+ * @ORM\Column(type="media_collection")
+ */
+private $imageCollection;
+
+public function __construct()
+{
+    $this->imageCollection = new ArrayCollection();
+}
+```
     
 You can bound these fields to a form using its corresponding type:
 
-    use Artgris\Bundle\MediaBundle\Form\Type\MediaType;
-    use Artgris\Bundle\MediaBundle\Form\Type\MediaCollectionType;
-    
-    // ... 
-    
-    $builder
-        ->add('image', MediaType::class)
-        ->add('imageCollection', MediaCollectionType::class);
+```php
+use Artgris\Bundle\MediaBundle\Form\Type\MediaType;
+use Artgris\Bundle\MediaBundle\Form\Type\MediaCollectionType;
+
+// ... 
+
+$builder
+    ->add('image', MediaType::class)
+    ->add('imageCollection', MediaCollectionType::class);
+```
     
 ### Options:
 
@@ -100,12 +110,14 @@ You can bound these fields to a form using its corresponding type:
 - `'allow_crop' => true` allows the user to edit the image using [fengyuanchen/cropper](https://github.com/fengyuanchen/cropper)
 - `'crop_options' => array` if `allow_crop` is set to `true`, allows to specify extra crop options. The default options:
 
-        'crop_options' => [
-            'display_crop_data' => true,    // will display crop box informations (x, y, width, height, and ratio if there is one)
-            'allow_flip' => true,           // allows to flip the image vertically and horizontally
-            'allow_rotation' => true,       // allows to rotate the image (90 degrees)
-            'ratio' => false                // force a crop ratio. E.g 16/9
-        ],
+```php
+'crop_options' => [
+    'display_crop_data' => true,    // will display crop box informations (x, y, width, height, and ratio if there is one)
+    'allow_flip' => true,           // allows to flip the image vertically and horizontally
+    'allow_rotation' => true,       // allows to rotate the image (90 degrees)
+    'ratio' => false                // force a crop ratio. E.g 16/9
+],
+```
 
 **MediaCollectionType:**
 
@@ -118,30 +130,36 @@ Some [ninsuo/symfony-collection](https://github.com/ninsuo/symfony-collection)'s
 - `'add_at_the_end' => true`
 
 Like regular collections, you can edit entries options, i.e to enable alts:
-        
-    'entry_options' => [
-        'allow_alt' => true,
-        'display_file_manager' => false
-    ]
+
+```php
+'entry_options' => [
+    'allow_alt' => true,
+    'display_file_manager' => false
+]
+```
 
 ### About the form HTML theme
 
 Include bootstrap's theme
  
-    {% form_theme form ':admin/includes:bootstrap_3_layout.html.twig' %}
+```twig
+{% form_theme form ':admin/includes:bootstrap_3_layout.html.twig' %}
+```
 
 To override the widget theme, check `Resources/views/forms/fields.html.twig`.
 
 ### Constraints example
 
-    use Artgris\Bundle\MediaBundle\Form\Validator\Constraint as MediaAssert;
+```php
+use Artgris\Bundle\MediaBundle\Form\Validator\Constraint as MediaAssert;
 
-    // ...
+// ...
 
-    /**
-     * @var ArrayCollection|Media[]
-     * @ORM\Column(type="media_collection")
-     * @MediaAssert\Count(min="2")
-     * @Assert\All({@MediaAssert\Image()})
-     */
-    private $images;
+/**
+ * @var ArrayCollection|Media[]
+ * @ORM\Column(type="media_collection")
+ * @MediaAssert\Count(min="2")
+ * @Assert\All({@MediaAssert\Image()})
+ */
+private $images;
+```
