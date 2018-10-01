@@ -51,7 +51,7 @@ class MediaType extends AbstractType
                 'display_crop_data' => true,
                 'allow_flip' => true,
                 'allow_rotation' => true,
-                'ratio' => 16/9
+                'ratio' => false
             ],
             'path_readonly' => false,
             'conf' => false,
