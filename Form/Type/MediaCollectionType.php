@@ -17,6 +17,7 @@ class MediaCollectionType extends CollectionType
     public function configureOptions(OptionsResolver $resolver)
     {
         $entryOptionsNormalizer = function (Options $options, $value) {
+            $value['conf'] = $options['conf'];
             $value['block_name'] = 'entry';
 
             return $value;
@@ -37,10 +38,11 @@ class MediaCollectionType extends CollectionType
             'max' => 100,
             'init_with_n_elements' => 1,
             'add_at_the_end' => true,
-            'conf' => false,
             'tree' => 0,
             'error_bubbling' => false
         ]);
+
+        $resolver->setRequired('conf');
 
         $resolver->setNormalizer('entry_options', $entryOptionsNormalizer);
     }
@@ -48,6 +50,7 @@ class MediaCollectionType extends CollectionType
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
         parent::buildView($view, $form, $options);
+
         $view->vars = array_replace($view->vars, [
             'data_max' => $options['max'],
             'data_min' => $options['min'],

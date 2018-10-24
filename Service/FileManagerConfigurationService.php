@@ -20,7 +20,7 @@ class FileManagerConfigurationService extends \Twig_Extension
     public function getWebPath(string $conf)
     {
         if (!isset($this->artgrisFileManagerConfig['conf'][$conf])) {
-            throw new \InvalidArgumentException("The conf $conf was not found in artgris_file_manager.");
+            throw new \InvalidArgumentException("The conf \"$conf\" was not found in artgris_file_manager.");
         }
 
         $confPath = $this->artgrisFileManagerConfig['conf'][$conf]['dir'];

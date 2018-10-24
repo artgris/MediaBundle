@@ -18,15 +18,7 @@ class ImageValidator extends ConstraintValidator
             return;
         }
 
-        if (!$value instanceof Media) {
-            throw new UnexpectedTypeException($value, Media::class);
-        }
-
-        if (empty($value->getPath())) {
-            return;
-        }
-
-        $extension = strtolower(pathinfo($value->getPath(), PATHINFO_EXTENSION));
+        $extension = strtolower(pathinfo($value, PATHINFO_EXTENSION));
 
         if (!in_array($extension, self::SUPPORTED_EXTENSIONS)) {
             $this->context->buildViolation($constraint->message)->addViolation();

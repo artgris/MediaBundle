@@ -1,6 +1,6 @@
 <!-- Modal -->
-<div class="modal fade artgris-media-modal" id="myModal{{ form.vars.id }}" tabindex="-1" role="dialog"
-     aria-labelledby="myModalLabel">
+<div class="modal fade artgris-media-modal" id="artgris-filemanager-modal-{{ form.vars.id }}" tabindex="-1" role="dialog"
+     aria-labelledby="{{ 'File Manager'|trans }}">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -9,11 +9,11 @@
                 <h4 class="modal-title" id="myModalLabel">{{ 'File Manager'|trans }}</h4>
             </div>
             <div class="modal-body">
-                <iframe  class="iframe"
-                         data-src="{{ path('file_manager', {module:1, conf:conf, tree:tree}) }}"
-                         width="100%"
-                         height="500"
-                         frameborder="0"></iframe>
+                <iframe class="iframe"
+                        data-src="{{ path('file_manager', {module:1, conf:conf, tree:tree}) }}"
+                        width="100%"
+                        height="500"
+                        frameborder="0"></iframe>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">{{ 'Close'|trans }}</button>

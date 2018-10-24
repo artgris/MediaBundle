@@ -13,26 +13,13 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class MediaType extends AbstractType
 {
 
-    public function buildForm(FormBuilderInterface $builder, array $options)
-    {
-        $builder
-            ->add('path', TextType::class, [
-                'required' => false,
-                'attr' => ['placeholder' => 'artgris.media.path.placeholder', 'readonly' => $options['path_readonly']],
-            ])
-            ->add('alt', TextType::class, [
-                'required' => false,
-                'attr' => ['placeholder' => 'artgris.media.alt.placeholder']
-            ]);
-    }
-
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
         parent::buildView($view, $form, $options);
+
         $view->vars = array_replace($view->vars, [
             'conf' => $options['conf'],
             'tree' => $options['tree'],
-            'allow_alt' => $options['allow_alt'],
             'allow_crop' => $options['allow_crop'],
             'crop_options' => $options['crop_options'],
             'display_file_manager' => $options['display_file_manager'],
@@ -43,9 +30,7 @@ class MediaType extends AbstractType
     {
         $resolver->setDefaults([
             'required' => false,
-            'data_class' => Media::class,
             'by_reference' => false,
-            'allow_alt' => false,
             'allow_crop' => true,
             'crop_options' => [
                 'display_crop_data' => true,
@@ -54,16 +39,23 @@ class MediaType extends AbstractType
                 'ratio' => false
             ],
             'path_readonly' => false,
-            'conf' => false,
             'tree' => 0,
             'error_bubbling' => false,
             'display_file_manager' => true,
         ]);
+
+        $resolver->setRequired('conf');
     }
 
     public function getBlockPrefix()
     {
         return 'artgris_media';
     }
+
+    public function getParent()
+    {
+        return TextType::class;
+    }
+
 
 }

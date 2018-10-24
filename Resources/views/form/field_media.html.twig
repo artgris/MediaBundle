@@ -28,7 +28,7 @@
         {% set attr = attr|merge({'data-allow-remove': allow_delete ? 1 : 0 }) %}
         {% set attr = attr|merge({'data-name-prefix': full_name}) %}
 
-        <div id="{{ form.vars.id }}" class="media-list artgris-media-list artgris-media-collection" {% for k, v in attr %} {{ k }}="{{ v|e }}"{% endfor %}>
+        <div id="{{ form.vars.id }}" class="artgris-media-list artgris-media-collection" {% for k, v in attr %} {{ k }}="{{ v|e }}"{% endfor %}>
             {% for media in form %}
                 {{ artgris.render_media(media, true, form.vars.id, conf) }}
             {% endfor %}
@@ -43,7 +43,7 @@
 
 {% macro render_media(form, collection = true, id, conf) %}
     {% spaceless %}
-        <div class="artgris-media">
+        <div class="artgris-media {% if form.vars.errors|length > 0 %}error{% endif %}">
             {% if collection %}
                 <div class="actions pull-right">
                     <a href="#" class="js-remove-collection btn btn-danger collection-remove collection-action"><span class="fa fa-remove"></span></a>
@@ -64,31 +64,28 @@
                 {% endif %}
 
                 {% set base_path = get_web_path(conf) %}
-                <div class="img-preview col-sm-2" id="preview{{ form.path.vars.id }}" data-id="{{ id }}" data-conf="{{ conf }}" data-base-path="{{ base_path }}">
-                    {% set preview = fileIcon(form.path.vars.data).html %}
-                    {% if form.vars.allow_crop and '<img' in preview and '.svg' not in preview and form.path.vars.data[:base_path|length] == base_path %}
+                <div class="img-preview col-sm-2" id="preview{{ form.vars.id }}" data-id="{{ id }}" data-conf="{{ conf }}" data-base-path="{{ base_path }}">
+                    {% set preview = fileIcon(form.vars.data) %}
+                    {% if form.vars.allow_crop and '<img' in preview and '.svg' not in preview and form.vars.data[:base_path|length] == base_path %}
                         <a href="#" class="js-crop crop-hover" data-toggle="modal" data-target="#crop-modal-{{ id }}">
                             <span><i class="fa fa-crop"></i></span>
                             {{ preview|raw }}
                         </a>
                     {% else %}
-                        {{ preview|raw }}
+                        {{ preview.html|raw }}
                     {% endif %}
                 </div>
 
                 <div class="img-description {% if collection %}col-sm-9 img-description-collection {% else %}col-sm-10{% endif %}">
                     <table>
                         <tr>
-                            <td class="td-label td-path">{{ form_label(form.path, null, {label_attr: {class: 'control-label'}}) }}</td>
-                            <td>{{ form_widget(form.path, {attr: {class: 'artgris-media-path'}}) }}</td>
+                            <td class="td-label td-path">
+                                <label for="{{ form.vars.id }}" class="control-label col-sm-2 control-label">{{ 'Path'|trans }}</label>
+                            </td>
+                            <td>
+                                <input type="text" class="artgris-media-path form-control" id="{{ form.vars.id }}" name="{{ form.vars.full_name }}" {% if form.vars.required %}required="required"{% endif %} value="{{ form.vars.value }}" placeholder="{{ 'artgris.media.path.placeholder'|trans }}">
+                            </td>
                         </tr>
-
-                        {% if form.vars.allow_alt %}
-                            <tr>
-                                <td class="td-label">{{ form_label(form.alt, null, {label_attr: {class: 'control-label'}}) }}</td>
-                                <td>{{ form_widget(form.alt, {attr: {class: 'artgris-media-alt'}}) }}</td>
-                            </tr>
-                        {% endif %}
                     </table>
 
                     {% if collection %}
@@ -96,19 +93,21 @@
                             {% include '@ArtgrisMedia/form/_btn_manager.html.twig' with {'id' : id, 'form' : form, 'conf': conf} only %}
                         </div>
                     {% else %}
-                        <div class="upload {% if not form.vars.allow_alt %}upload-no-alt{% endif %}">
+                        <div class="upload">
                             <div class="btn-group artgris-browse-group" role="group">
                                 {% include '@ArtgrisMedia/form/_btn_manager.html.twig' with {'id' : id, 'form' : form, 'conf': conf, 'collection': false} only %}
                             </div>
                         </div>
                     {% endif %}
                 </div>
-                {% if collection and form.vars.errors|length > 0 %}
-                    <div class="col-md-12 margin">
-                        {{ form_errors(form) }}
-                    </div>
-                {% endif %}
             </div>
+
+            {% if collection and form.vars.errors|length > 0 %}
+                <div class="artgris-collection-error">
+                    {{ form_errors(form) }}
+                </div>
+            {% endif %}
+
             <div class="col-m-12 text-center">
                 <progress></progress>
             </div>

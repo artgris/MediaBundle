@@ -141,11 +141,18 @@
 
 .artgris-media .upload {
     min-height: 60px;
-}
-
-.artgris-media .upload-no-alt {
     padding-top: 10px;
     margin-top: 1px;
+}
+
+.artgris-media.error, .artgris-media-list .artgris-media.error {
+    border: 1px solid red;
+    color: red;
+}
+
+.artgris-collection-error {
+    font-weight: bold;
+    margin: 10px;
 }
 
 .artgris-media .btn-x-sm {
