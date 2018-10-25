@@ -18,9 +18,19 @@ class ImageValidator extends ConstraintValidator
             return;
         }
 
-        $extension = strtolower(pathinfo($value, PATHINFO_EXTENSION));
+        if (is_iterable($value)) {
+            foreach ($value as $item) {
+                $this->checkExtension($constraint, $item);
+            }
+        } else {
+            $this->checkExtension($constraint, $value);
+        }
+    }
 
-        if (!in_array($extension, self::SUPPORTED_EXTENSIONS)) {
+    private function checkExtension(Constraint $constraint, string $path): void {
+        $extension = strtolower(pathinfo($path, PATHINFO_EXTENSION));
+
+        if (!\in_array($extension, self::SUPPORTED_EXTENSIONS)) {
             $this->context->buildViolation($constraint->message)->addViolation();
         }
     }
