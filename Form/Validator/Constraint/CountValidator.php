@@ -13,7 +13,7 @@ class CountValidator extends \Symfony\Component\Validator\Constraints\CountValid
 
     public function validate($value, Constraint $constraint)
     {
-        if ($value !== null && $value instanceof Collection) {
+        if ($value instanceof Collection) {
             $value = array_filter($value->toArray(), function ($path) {
                 return $path !== null;
             });

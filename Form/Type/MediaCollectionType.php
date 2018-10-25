@@ -2,8 +2,8 @@
 
 namespace Artgris\Bundle\MediaBundle\Form\Type;
 
+use Deployer\Collection\Collection;
 use Symfony\Component\Form\DataTransformerInterface;
-use Symfony\Component\Form\Exception\TransformationFailedException;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
@@ -16,9 +16,8 @@ class MediaCollectionType extends CollectionType implements DataTransformerInter
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         parent::buildForm($builder, $options);
-        $builder->addViewTransformer($this);
+        $builder->addModelTransformer($this);
     }
-
 
     /**
      * {@inheritdoc}
@@ -88,11 +87,11 @@ class MediaCollectionType extends CollectionType implements DataTransformerInter
      */
     public function reverseTransform($value)
     {
-        if (count($value) === 0) { // TODO validation
+        if (\count($value) === 0) { // TODO validation
             return null;
         }
 
-        return array_filter($value, function ($path) {
+        return array_filter(($value instanceof Collection) ? $value->toArray() : $value, function ($path) {
             return $path !== null;
         });
     }
