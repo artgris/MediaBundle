@@ -87,7 +87,7 @@ class MediaCollectionType extends CollectionType implements DataTransformerInter
      */
     public function reverseTransform($value)
     {
-        if (\count($value) === 0) { // TODO validation
+        if (\count($value) === 0) {
             return null;
         }
 
