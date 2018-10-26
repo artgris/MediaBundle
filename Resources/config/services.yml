@@ -5,7 +5,8 @@ services:
             - { name: twig.extension }
         arguments: ['@parameter_bag']
 
-#    file_type_service:
-#        class: Artgris\Bundle\FileManagerBundle\Service\FileTypeService
-#        arguments: ['@router']
-#        public: true
+    twig.extension.gimage:
+        class: Artgris\Bundle\MediaBundle\Service\GImageTwig
+        arguments: ['@image.handling']
+        tags:
+            - { name: twig.extension }

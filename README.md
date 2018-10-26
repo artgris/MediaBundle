@@ -134,12 +134,14 @@ Like regular collections, you can edit entries options, i.e to enable alts:
 ]
 ```
 
-### About the form HTML theme
+### Gregwar Image Bundle Integration
 
-Include bootstrap's theme
- 
+This bundle relies on [Gregwar/ImageBundle](https://github.com/Gregwar/ImageBundle) to crop, mirror and scale images.
+
+If you need to manually crop image in twig (if they are too large for example), instead of using the `image` and `web_image` functions, you should `gImage`, which works the same as `image` but improves compatibility.
+
+E.g:
+
 ```twig
-{% form_theme form ':admin/includes:bootstrap_3_layout.html.twig' %}
+{{ gImage(news.image).zoomCrop(100, 100) }}
 ```
-
-To override the widget theme, check `Resources/views/forms/fields.html.twig`.
