@@ -103,7 +103,7 @@ $builder
 
 **MediaType:**
 - `'conf' => 'yourconf'` (**required**) specifies a configuration defined in the FileManager. For more informations about media configurations, [refer to FileManagerBundle's documentation](https://github.com/artgris/FileManagerBundle#add-following-configuration-)
-- `'path_readonly' => false` prevents the user from manually changing the path (it only adds a "readonly" attribute to the corresponding HTML input)
+- `'readonly' => false` prevents the user from manually changing the path (it only adds a "readonly" attribute to the corresponding HTML input)
 - `'allow_crop' => true` allows the user to edit the image using [fengyuanchen/cropper](https://github.com/fengyuanchen/cropper)
 - `'crop_options' => array` if `allow_crop` is set to `true`, allows to specify extra crop options. The default options:
 
@@ -130,7 +130,6 @@ Like regular collections, you can edit entries options, i.e to enable alts:
 
 ```php
 'entry_options' => [
-    'allow_alt' => true,
     'display_file_manager' => false
 ]
 ```
@@ -144,19 +143,3 @@ Include bootstrap's theme
 ```
 
 To override the widget theme, check `Resources/views/forms/fields.html.twig`.
-
-### Constraints example
-
-```php
-use Artgris\Bundle\MediaBundle\Form\Validator\Constraint as MediaAssert;
-
-// ...
-
-/**
- * @var ArrayCollection|Media[]
- * @ORM\Column(type="media_collection")
- * @MediaAssert\Count(min="2")
- * @Assert\All({@MediaAssert\Image()})
- */
-private $images;
-```

@@ -20,6 +20,7 @@ class MediaType extends AbstractType
         $view->vars = array_replace($view->vars, [
             'conf' => $options['conf'],
             'tree' => $options['tree'],
+            'readonly' => $options['readonly'],
             'allow_crop' => $options['allow_crop'],
             'crop_options' => $options['crop_options'],
             'display_file_manager' => $options['display_file_manager'],
@@ -38,7 +39,7 @@ class MediaType extends AbstractType
                 'allow_rotation' => true,
                 'ratio' => false
             ],
-            'path_readonly' => false,
+            'readonly' => false,
             'tree' => 0,
             'error_bubbling' => false,
             'display_file_manager' => true,
