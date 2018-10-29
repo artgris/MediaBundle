@@ -18,17 +18,19 @@ class ImageValidator extends ConstraintValidator
             return;
         }
 
-        if (!$value instanceof Media) {
-            throw new UnexpectedTypeException($value, Media::class);
+        if (is_iterable($value)) {
+            foreach ($value as $item) {
+                $this->checkExtension($constraint, $item);
+            }
+        } else {
+            $this->checkExtension($constraint, $value);
         }
+    }
 
-        if (empty($value->getPath())) {
-            return;
-        }
+    private function checkExtension(Constraint $constraint, string $path): void {
+        $extension = strtolower(pathinfo($path, PATHINFO_EXTENSION));
 
-        $extension = strtolower(pathinfo($value->getPath(), PATHINFO_EXTENSION));
-
-        if (!in_array($extension, self::SUPPORTED_EXTENSIONS)) {
+        if (!\in_array($extension, self::SUPPORTED_EXTENSIONS)) {
             $this->context->buildViolation($constraint->message)->addViolation();
         }
     }

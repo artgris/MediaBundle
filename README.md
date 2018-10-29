@@ -55,40 +55,34 @@
  artgris_media:
      resource: "@ArtgrisMediaBundle/Resources/config/routing.yml"
 ```
-             
-- In config.yml, add the following Doctrine types:
-```yaml
-    doctrine:
-        dbal:
-            types:
-                media: Artgris\Bundle\MediaBundle\Type\MediaType
-                media_collection: Artgris\Bundle\MediaBundle\Type\MediaCollectionType
-```
-                    
+
 ### Usage
     
-In an entity, you can now add the new `media` types, i.e:
+In an entity, add the path attributes as string.
+You can also use doctrine's types such as `simple_array`, `array`, `json` for collections.
     
 ```php
+
+use Artgris\Bundle\MediaBundle\Form\Validator\Constraint as MediaAssert; // optionnal, to force image files
+
+// ...
+
 /**
- * @var Media
- * @ORM\Column(type="media")
+ * @var string
+ * @ORM\Column(type="string")
+ * @Assert\NotNull()
  */
 private $image;
 
 /**
- * @var ArrayCollection|Media[]
- * @ORM\Column(type="media_collection")
+ * @var Collection|string[]
+ * @ORM\Column(type="simple_array", nullable=true)
+ * @MediaAssert\Image()
  */
-private $imageCollection;
-
-public function __construct()
-{
-    $this->imageCollection = new ArrayCollection();
-}
+private $gallery;
 ```
     
-You can bound these fields to a form using its corresponding type:
+Then, use a form builder and assigne the `MediaType` class for a single file, or the `MediaCollectionType` for multiple files.
 
 ```php
 use Artgris\Bundle\MediaBundle\Form\Type\MediaType;
@@ -97,16 +91,19 @@ use Artgris\Bundle\MediaBundle\Form\Type\MediaCollectionType;
 // ... 
 
 $builder
-    ->add('image', MediaType::class)
-    ->add('imageCollection', MediaCollectionType::class);
+    ->add('image', MediaType::class, [
+        'conf' => 'default'
+    ])
+    ->add('gallery', MediaCollectionType::class, [
+        'conf' => 'default'
+    ]);
 ```
     
 ### Options:
 
 **MediaType:**
 - `'conf' => 'yourconf'` (**required**) specifies a configuration defined in the FileManager. For more informations about media configurations, [refer to FileManagerBundle's documentation](https://github.com/artgris/FileManagerBundle#add-following-configuration-)
-- `'allow_alt' => false` allows the user to specify an alt
-- `'path_readonly' => false` prevents the user from manually changing the path (it only adds a "readonly" attribute to the corresponding HTML input)
+- `'readonly' => false` prevents the user from manually changing the path (it only adds a "readonly" attribute to the corresponding HTML input)
 - `'allow_crop' => true` allows the user to edit the image using [fengyuanchen/cropper](https://github.com/fengyuanchen/cropper)
 - `'crop_options' => array` if `allow_crop` is set to `true`, allows to specify extra crop options. The default options:
 
@@ -133,33 +130,18 @@ Like regular collections, you can edit entries options, i.e to enable alts:
 
 ```php
 'entry_options' => [
-    'allow_alt' => true,
     'display_file_manager' => false
 ]
 ```
 
-### About the form HTML theme
+### Gregwar Image Bundle Integration
 
-Include bootstrap's theme
- 
+This bundle relies on [Gregwar/ImageBundle](https://github.com/Gregwar/ImageBundle) to crop, mirror and scale images.
+
+If you need to manually crop image in twig (if they are too large for example), instead of using the `image` and `web_image` functions, you should `gImage`, which works the same as `image` but improves compatibility.
+
+E.g:
+
 ```twig
-{% form_theme form ':admin/includes:bootstrap_3_layout.html.twig' %}
-```
-
-To override the widget theme, check `Resources/views/forms/fields.html.twig`.
-
-### Constraints example
-
-```php
-use Artgris\Bundle\MediaBundle\Form\Validator\Constraint as MediaAssert;
-
-// ...
-
-/**
- * @var ArrayCollection|Media[]
- * @ORM\Column(type="media_collection")
- * @MediaAssert\Count(min="2")
- * @Assert\All({@MediaAssert\Image()})
- */
-private $images;
+{{ gImage(news.image).zoomCrop(100, 100) }}
 ```

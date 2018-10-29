@@ -25,7 +25,7 @@ $(function () {
         .on('change', '.artgris-media-path', function (e) {
             var path = $(this).val();
             var id = $(this).attr('id');
-            updatePreview(path, $('#preview' + id));
+            updatePreview(path, $('#preview-' + id));
         })
         .on('show.bs.modal', '.modal.artgris-media-modal', function() {
             var $iframe = $(this).find('.iframe');
@@ -38,7 +38,7 @@ $(function () {
                 $iframe.contents().on('click', '.file .select', function () {
                     var path = $(this).attr('data-path');
                     $('#' + $artgrisPath).val(path);
-                    updatePreview(path, $('#preview' + $artgrisPath));
+                    updatePreview(path, $('#preview-' + $artgrisPath));
                     $($artgrisTarget).modal('hide')
                 });
             }
@@ -117,7 +117,7 @@ $(function () {
                     success: function (res) {
                         cropper.destroy();
                         $pathInput.val(res);
-                        updatePreview(res, $('#preview' + $pathInput.attr('id')));
+                        updatePreview(res, $('#preview-' + $pathInput.attr('id')));
                         $this.modal('hide');
                     },
                     error: function (res) {
@@ -214,7 +214,7 @@ function initFileUpload(selector) {
 
                     // Update preview
                     $input.val(file.url);
-                    updatePreview(file.url, $('#preview' + $input.attr('id')));
+                    updatePreview(file.url, $('#preview-' + $input.attr('id')));
 
                     // update iframe
                     $('.iframe').attr('src', function (i, val) {

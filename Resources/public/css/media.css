@@ -56,6 +56,18 @@
     margin-bottom: 5px;
 }
 
+.artgris-media .artgris-collection-remove {
+    background-color: transparent;
+    color: red;
+    transition: all 200ms;
+}
+
+.artgris-media .artgris-collection-remove:hover {
+    background-color: red;
+    color: white;
+    transition: all 200ms;
+}
+
 .artgris-media-list .artgris-media img {
     max-width: 100%;
     max-height: 75px;
@@ -67,11 +79,11 @@
 }
 
 .artgris-media-list .actions .collection-remove {
-    position: relative;
     right: 0;
     border-radius: 0;
     border: none;
     bottom: 6px;
+    margin-top: -6px;
 }
 
 .artgris-media .img-preview {
@@ -141,11 +153,18 @@
 
 .artgris-media .upload {
     min-height: 60px;
-}
-
-.artgris-media .upload-no-alt {
     padding-top: 10px;
     margin-top: 1px;
+}
+
+.artgris-media.error, .artgris-media-list .artgris-media.error {
+    border: 1px solid red;
+    color: red;
+}
+
+.artgris-collection-error {
+    font-weight: bold;
+    margin: 10px;
 }
 
 .artgris-media .btn-x-sm {
