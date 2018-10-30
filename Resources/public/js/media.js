@@ -132,6 +132,7 @@ $(function () {
     $('.artgris-media-collection').each(function () {
         var $this = $(this);
         $this.collection({
+            fade_out: false,
             max: $this.data('max'),
             min: $this.data('min'),
             init_with_n_elements: $this.data('init-with-n-elements'),
