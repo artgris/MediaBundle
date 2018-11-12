@@ -40,7 +40,7 @@ class GImageTwig extends \Twig_Extension
     public function image($path)
     {
         if ($path !== null && $path[0] === '/') {
-            $path = substr($path, 1);
+            $path = urldecode(substr($path, 1));
         }
 
         return $this->imageHandling->open($path);
