@@ -61,8 +61,8 @@ class AjaxController extends Controller
         $pathinfo = pathinfo(parse_url($src, PHP_URL_PATH));
         $extension = $pathinfo['extension'];
 
-        if ($src[0] == '/') {
-            $src = $request->getSchemeAndHttpHost() . $src;
+        if ($src[0] === '/') {
+            $src = urldecode($this->getParameter('kernel.project_dir') . '/' . $fileManager['web_dir'] . $src);
         }
 
         $image = Image::open($src)
