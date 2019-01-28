@@ -231,7 +231,6 @@
 .artgris-media-crop-modal .image-data .label {
     margin-left: 5px;
     margin-top: 15px;
-    background-color: #9e9e9e;
     text-transform: none;
 }
 
@@ -276,4 +275,10 @@
 .artgris-media .crop-hover img:before {
     width: 100%;
     height: 100%;
+}
+.btn-toolbar .btn-group {
+    position: relative;
+    display: -ms-inline-flexbox;
+    display: inline-flex;
+    vertical-align: middle;
 }

@@ -51,20 +51,20 @@
             {% endif %}
             <div class="row">
                 {% if collection %}
-                    <div class="col-sm-1">
+                    <div class="col-1">
                         <table class="table-sort">
                             <tr class="table-sort-up">
-                                <td><a href="#" class="collection-up btn btn-default btn-x-sm"><span class="fa fa-chevron-up"></span></a></td>
+                                <td><a href="#" class="collection-up btn btn-light btn-x-sm"><span class="fa fa-chevron-up"></span></a></td>
                             </tr>
                             <tr class="table-sort-down">
-                                <td><a href="#" class="collection-down btn btn-default btn-x-sm"><span class="fa fa-chevron-down"></span></a></td>
+                                <td><a href="#" class="collection-down btn btn-light btn-x-sm"><span class="fa fa-chevron-down"></span></a></td>
                             </tr>
                         </table>
                     </div>
                 {% endif %}
 
                 {% set base_path = get_web_path(conf) %}
-                <div class="img-preview col-sm-2" id="preview-{{ form.vars.id }}" data-id="{{ id }}" data-conf="{{ conf }}" data-base-path="{{ base_path }}">
+                <div class="img-preview col-2" id="preview-{{ form.vars.id }}" data-id="{{ id }}" data-conf="{{ conf }}" data-base-path="{{ base_path }}">
                     {% set preview = fileIcon(form.vars.data).html %}
                     {% if form.vars.allow_crop and '<img' in preview and '.svg' not in preview and form.vars.data[:base_path|length] == base_path %}
                         <a href="#" class="js-crop crop-hover" data-toggle="modal" data-target="#crop-modal-{{ id }}">
@@ -76,13 +76,13 @@
                     {% endif %}
                 </div>
 
-                <div class="img-description {% if collection %}col-sm-9 img-description-collection {% else %}col-sm-10{% endif %}">
+                <div class="img-description {% if collection %}col-9 img-description-collection {% else %}col-10{% endif %}">
                     <table>
                         {% block fields %}
                             <tr>
                                 <td class="td-label td-path">
 
-                                    <label for="{{ form.vars.id }}" class="control-label col-sm-2 control-label">{{ 'Path'|trans }}</label>
+                                    <label for="{{ form.vars.id }}" class="control-label">{{ 'Path'|trans }}</label>
                                 </td>
                                 <td>
                                     <input type="text" class="artgris-media-path form-control" id="{{ form.vars.id }}" name="{{ form.vars.full_name }}" {% if form.vars.required %}required="required"{% endif %} value="{{ form.vars.value }}" placeholder="{{ 'artgris.media.path.placeholder'|trans }}" {{ form.vars.readonly|default ? 'readonly="readonly"' }}>
