@@ -10,38 +10,41 @@
                 </button>
             </div>
             <div class="modal-body" data-ratio="{{ crop_options.ratio|default }}">
-                <div class="btn-toolbar pb-3">
-                    {% if crop_options.allow_rotation|default(true) %}
-                    <div class="btn-group  mr-2">
-                        <a href="#" class="btn btn-secondary js-rotate-left"><span class="fa fa-rotate-left"></span></a>
-                        <a href="#" class="btn btn-secondary js-rotate-right"><span class="fa fa-rotate-right"></span></a>
-                    </div>
-                    {% endif %}
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="btn-toolbar pb-3">
+                            {% if crop_options.allow_rotation|default(true) %}
+                                <div class="btn-group  mr-2">
+                                    <a href="#" class="btn btn-secondary js-rotate-left"><span class="fa fa-rotate-left"></span></a>
+                                    <a href="#" class="btn btn-secondary js-rotate-right"><span class="fa fa-rotate-right"></span></a>
+                                </div>
+                            {% endif %}
 
-                    {% if crop_options.allow_flip|default(true) %}
-                        <div class="btn-group  mr-2">
-                            <a href="#" class="btn btn-secondary js-flip-x"><span class="fa fa-arrows-h"></span></a>
-                            <a href="#" class="btn btn-secondary js-flip-y"><span class="fa fa-arrows-v"></span></a>
-                        </div>
-                    {% endif %}
-
-                    {% if crop_options.display_crop_data|default(true) %}
-                        <div class="pull-right image-data py-2 ">
-                            {% for el in ['x', 'y', 'width', 'height'] %}
-                                <span class="label"> {{ (el ~ ':')|capitalize|trans}} <span class="js-{{ el }}">0</span></span>
-                            {% endfor %}
-                            {% if crop_options.ratio|default %}
-                                <span class="label label-primary"> {{ 'Ratio: '|trans ~ crop_options.ratio|round(2) }}  </span>
+                            {% if crop_options.allow_flip|default(true) %}
+                                <div class="btn-group  mr-2">
+                                    <a href="#" class="btn btn-secondary js-flip-x"><span class="fa fa-arrows-h"></span></a>
+                                    <a href="#" class="btn btn-secondary js-flip-y"><span class="fa fa-arrows-v"></span></a>
+                                </div>
                             {% endif %}
                         </div>
-                    {% endif %}
-
                     </div>
-
+                    {% if crop_options.display_crop_data|default(true) %}
+                        <div class="col-md-6">
+                            <div class="float-right image-data py-2 ">
+                                {% for el in ['x', 'y', 'width', 'height'] %}
+                                    <span class="label"> {{ (el ~ ':')|capitalize|trans }} <span class="js-{{ el }}">0</span></span>
+                                {% endfor %}
+                                {% if crop_options.ratio|default %}
+                                    <span class="label label-primary"> {{ 'Ratio: '|trans ~ crop_options.ratio|round(2) }}  </span>
+                                {% endif %}
+                            </div>
+                        </div>
+                    {% endif %}
+                </div>
                 <div class="modal-crop-container"></div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">{{ 'Cancel'|trans }}</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ 'Cancel'|trans }}</button>
                 <button type="button" class="btn btn-primary js-save">{{ 'Apply'|trans }}</button>
             </div>
         </div>

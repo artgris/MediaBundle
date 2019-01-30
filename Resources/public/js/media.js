@@ -136,7 +136,7 @@ $(function () {
             max: $this.data('max'),
             min: $this.data('min'),
             init_with_n_elements: $this.data('init-with-n-elements'),
-            add: '<span class="images-add"><a href="#" class="btn btn-default"><span class="fa fa-plus"></span> ' + addStr + '</a></span>',
+            add: '<span class="images-add"><a href="#" class="btn btn-light"><span class="fa fa-plus"></span> ' + addStr + '</a></span>',
             add_at_the_end: $this.data('add-at-the-end'),
             after_add: function (collection, element) {
                 initFileUpload(element.find('.fileupload'));
