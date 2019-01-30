@@ -60,7 +60,7 @@
                 {% endif %}
 
                 {% set base_path = get_web_path(conf) %}
-                <div class="img-preview text-center col-md-2 p-2" id="preview-{{ form.vars.id }}" data-id="{{ id }}" data-conf="{{ conf }}"
+                <div class="img-preview text-center {% if collection %}col-md-1{% else %}col-md-2{% endif %} p-2" id="preview-{{ form.vars.id }}" data-id="{{ id }}" data-conf="{{ conf }}"
                      data-base-path="{{ base_path }}">
                     {% set preview = fileIcon(form.vars.data).html %}
                     {% if form.vars.allow_crop and '<img' in preview and '.svg' not in preview and form.vars.data[:base_path|length] == base_path %}
@@ -75,7 +75,7 @@
 
                 {% block fields %}
                     {#label + input#}
-                    <div class="{% if collection %}col-md-5{% else %}col-md-7{% endif %}">
+                    <div class="{% if collection %}col-md-7{% else %}col-md-8{% endif %}">
                         <div class="row">
                             <label for="{{ form.vars.id }}" class="col-2 col-form-label">{{ 'Path'|trans }}</label>
                             <div class="col-10">
@@ -88,13 +88,13 @@
                 {% endblock %}
 
                 {% if collection %}
-                    <div class="col-md-3 p-2 text-center">
+                    <div class="col-md-2 p-2 text-center">
                         <div class="btn-group" role="group">
                             {% include '@ArtgrisMedia/form/_btn_manager.html.twig' with {'id' : id, 'form' : form, 'conf': conf} only %}
                         </div>
                     </div>
                 {% else %}
-                    <div class="col-md-3 p-2 text-center">
+                    <div class="col-md-2 p-2 text-center">
                         <div class="btn-group artgris-browse-group" role="group">
                             {% include '@ArtgrisMedia/form/_btn_manager.html.twig' with {'id' : id, 'form' : form, 'conf': conf, 'collection': false} only %}
                         </div>
