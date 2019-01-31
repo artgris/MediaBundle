@@ -15,15 +15,15 @@
                         <div class="btn-toolbar pb-3">
                             {% if crop_options.allow_rotation|default(true) %}
                                 <div class="btn-group  mr-2">
-                                    <a href="#" class="btn btn-secondary js-rotate-left"><span class="fa fa-rotate-left"></span></a>
-                                    <a href="#" class="btn btn-secondary js-rotate-right"><span class="fa fa-rotate-right"></span></a>
+                                    <a href="#" class="btn btn-secondary js-rotate-left"><span class="fa fa-undo"></span></a>
+                                    <a href="#" class="btn btn-secondary js-rotate-right"><span class="fa fa-redo"></span></a>
                                 </div>
                             {% endif %}
 
                             {% if crop_options.allow_flip|default(true) %}
                                 <div class="btn-group  mr-2">
-                                    <a href="#" class="btn btn-secondary js-flip-x"><span class="fa fa-arrows-h"></span></a>
-                                    <a href="#" class="btn btn-secondary js-flip-y"><span class="fa fa-arrows-v"></span></a>
+                                    <a href="#" class="btn btn-secondary js-flip-x"><span class="fa fa-chevron-left"></span></a>
+                                    <a href="#" class="btn btn-secondary js-flip-y"><span class="fa fa-chevron-right"></span></a>
                                 </div>
                             {% endif %}
                         </div>
