@@ -76,14 +76,9 @@
                 {% block fields %}
                     {#label + input#}
                     <div class="{% if collection %}col-md-6{% else %}col-md-7{% endif %}">
-                        <div class="row">
-                            {#<label for="{{ form.vars.id }}" class="col-2 col-form-label">{{ 'Path'|trans }}</label>#}
-                            <div class="col-12">
-                                <input type="text" class="form-control artgris-media-path" id="{{ form.vars.id }}" name="{{ form.vars.full_name }}"
-                                       {% if form.vars.required %}required="required"{% endif %} value="{{ form.vars.value }}"
-                                       placeholder="{{ 'artgris.media.path.placeholder'|trans }}" {{ form.vars.readonly|default ? 'readonly="readonly"' }}>
-                            </div>
-                        </div>
+                        <input type="text" class="form-control artgris-media-path" id="{{ form.vars.id }}" name="{{ form.vars.full_name }}"
+                               {% if form.vars.required %}required="required"{% endif %} value="{{ form.vars.value }}"
+                               placeholder="{{ 'artgris.media.path.placeholder'|trans }}" {{ form.vars.readonly|default ? 'readonly="readonly"' }}>
                     </div>
                 {% endblock %}
 
