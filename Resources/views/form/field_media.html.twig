@@ -83,7 +83,7 @@
                 {% endblock %}
 
                 {% if collection %}
-                    <div class="col p-2 text-center">
+                    <div class="col-md-2 p-2 text-center">
                         <div class="btn-group" role="group">
                             {% include '@ArtgrisMedia/form/_btn_manager.html.twig' with {'id' : id, 'form' : form, 'conf': conf} only %}
                         </div>
@@ -96,7 +96,7 @@
                     </div>
                 {% endif %}
                 {% if collection %}
-                    <div class="col p-0 align-top order-md-last order-first">
+                    <div class="col-md-1 p-0 align-top order-md-last order-first">
                         <a href="#" class="float-right js-remove-collection artgris-collection-remove btn btn-sm btn-danger collection-remove collection-action">
                             <span class="fa fa-remove"></span></a>
                     </div>
