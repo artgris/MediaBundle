@@ -1,7 +1,6 @@
 artgris.delete: 'Supprimer'
-Path: 'Chemin :'
+Path: 'Lien :'
 File: 'Fichier'
-Alt: 'Alt :'
 Add: 'Ajouter'
 Close: 'Fermer'
 File Manager: Gestionnaire de fichiers
