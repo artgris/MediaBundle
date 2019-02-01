@@ -64,7 +64,7 @@
                      data-base-path="{{ base_path }}">
                     {% set preview = fileIcon(form.vars.data).html %}
                     {% if form.vars.allow_crop and '<img' in preview and '.svg' not in preview and form.vars.data[:base_path|length] == base_path %}
-                        <a href="#" class="js-crop crop-hover" data-toggle="modal" data-target="#crop-modal-{{ id }}">
+                        <a href="#" class="js-crop crop-hover" data-toggle="modal" data-target="#crop-modal-{{ id }}" data-backdrop="static">
                             <span class=""><i class="fa fa-crop"></i></span>
                             {{ preview|raw }}
                         </a>
