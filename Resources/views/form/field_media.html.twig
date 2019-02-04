@@ -43,7 +43,7 @@
 
 {% macro render_media(form, collection = true, id, conf) %}
     {% spaceless %}
-        <div class="artgris-media m-2 {% if form.vars.errors|length > 0 %}error{% endif %}">
+        <div class="artgris-media container-fluid mb-2 {% if form.vars.errors|length > 0 %}error{% endif %}">
 
             <div class="row border bg-white align-items-center p-2">
                 {% if collection %}
