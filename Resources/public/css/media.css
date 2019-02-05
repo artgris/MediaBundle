@@ -85,3 +85,6 @@
     padding-bottom: 10px;
 }
 
+.artgris-media.is-dragover .row.border.bg-white {
+    background-color: #fffad7 !important;
+}
