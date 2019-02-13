@@ -54,6 +54,7 @@
 ```yaml  
  artgris_media:
      resource: "@ArtgrisMediaBundle/Resources/config/routing.yml"
+     prefix: /admin
 ```
 
 ### Usage
