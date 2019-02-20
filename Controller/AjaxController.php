@@ -28,6 +28,7 @@ class AjaxController extends Controller
     {
         $post = $request->request;
         $src = $post->get('src');
+        $src = strtok($src, '?');
         $x = $post->getInt('x');
         $y = $post->getInt('y');
         $width = $post->getInt('width');
@@ -63,6 +64,10 @@ class AjaxController extends Controller
 
         if ($src[0] === '/') {
             $src = urldecode($this->getParameter('kernel.project_dir') . '/' . $fileManager['web_dir'] . $src);
+        }
+
+        if (!file_exists($src)) {
+            return new JsonResponse('');
         }
 
         $image = Image::open($src)
