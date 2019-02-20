@@ -35,7 +35,7 @@ $(function () {
             applyIFrameEvents($iframe);
 
             function applyIFrameEvents($iframe) {
-                $iframe.contents().on('click', '.file .select', function () {
+                $iframe.contents().on('click', '.select', function () {
                     var path = $(this).attr('data-path');
                     $('#' + $artgrisPath).val(path);
                     updatePreview(path, $('#preview-' + $artgrisPath));
