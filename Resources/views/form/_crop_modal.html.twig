@@ -13,14 +13,14 @@
                 <div class="row">
                     <div class="col-md-6">
                         <div class="btn-toolbar pb-3">
-                            {% if crop_options.allow_rotation|default(true) %}
+                            {% if crop_options.allow_rotation %}
                                 <div class="btn-group  mr-2">
                                     <a href="#" class="btn btn-secondary js-rotate-left"><span class="fas fa-undo"></span></a>
                                     <a href="#" class="btn btn-secondary js-rotate-right"><span class="fas fa-redo"></span></a>
                                 </div>
                             {% endif %}
 
-                            {% if crop_options.allow_flip|default(true) %}
+                            {% if crop_options.allow_flip %}
                                 <div class="btn-group  mr-2">
                                     <a href="#" class="btn btn-secondary js-flip-x"><span class="fas fa-chevron-left"></span></a>
                                     <a href="#" class="btn btn-secondary js-flip-y"><span class="fas fa-chevron-right"></span></a>
@@ -28,7 +28,7 @@
                             {% endif %}
                         </div>
                     </div>
-                    {% if crop_options.display_crop_data|default(true) %}
+                    {% if crop_options.display_crop_data %}
                         <div class="col-md-6">
                             <div class="float-right image-data py-2 ">
                                 {% for el in ['x', 'y', 'width', 'height'] %}
