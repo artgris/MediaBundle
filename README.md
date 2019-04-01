@@ -155,3 +155,10 @@ E.g:
 ```twig
 {{ gImage(news.image).zoomCrop(100, 100) }}
 ```
+
+### Changed cropping path
+    
+add config/packages/artgris_media.yaml
+    
+    artgris_media:
+        cropped_path: "cropped/" #default value
