@@ -47,7 +47,7 @@ class MediaCollectionType extends CollectionType implements DataTransformerInter
             'init_with_n_elements' => 1,
             'add_at_the_end' => true,
             'tree' => 0,
-            'error_bubbling' => false
+            'error_bubbling' => false,
         ]);
 
         $resolver->setRequired('conf');

@@ -2,17 +2,14 @@
 
 namespace Artgris\Bundle\MediaBundle\Form\Type;
 
-use Artgris\Bundle\MediaBundle\Entity\Media;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class MediaType extends AbstractType
 {
-
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
         parent::buildView($view, $form, $options);
@@ -37,7 +34,7 @@ class MediaType extends AbstractType
                 'display_crop_data' => true,
                 'allow_flip' => true,
                 'allow_rotation' => true,
-                'ratio' => false
+                'ratio' => false,
             ],
             'readonly' => false,
             'tree' => 0,
@@ -57,6 +54,4 @@ class MediaType extends AbstractType
     {
         return TextType::class;
     }
-
-
 }

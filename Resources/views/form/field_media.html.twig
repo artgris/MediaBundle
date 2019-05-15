@@ -59,7 +59,7 @@
                     </div>
                 {% endif %}
 
-                {% set base_path = get_web_path(conf) %}
+                {% set base_path = form.vars.allow_crop ? get_web_path(conf) : 1 %}
                 <div class="img-preview text-center col-md-2 p-2" id="preview-{{ form.vars.id }}" data-id="{{ id }}" data-conf="{{ conf }}"
                      data-base-path="{{ base_path }}">
                     {% set preview = fileIcon(form.vars.data).html %}

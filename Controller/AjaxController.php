@@ -10,7 +10,6 @@ use Symfony\Component\HttpFoundation\Request;
 
 class AjaxController extends Controller
 {
-
     /**
      * @Route("/ajax-icon/", name="admin_ajax_icon", defaults={"filename" = null})
      */
@@ -18,6 +17,7 @@ class AjaxController extends Controller
     {
         $filePath = $request->query->get('path');
         $iconData = $this->get('file_type_service')->fileIcon($filePath);
+
         return new JsonResponse(['icon' => $iconData]);
     }
 
@@ -37,16 +37,13 @@ class AjaxController extends Controller
         $scaleY = $post->getInt('scaleY', 1);
         $rotate = $post->getInt('rotate');
         $conf = $post->get('conf');
-        
+
         $fileManager = $this->getParameter('artgris_file_manager');
 
         $destinationFolder = null;
         if ($conf !== null) {
-            if (isset($fileManager['conf'][$conf]['dir'])) {
-                $destinationFolder = $fileManager['conf'][$conf]['dir'];
-            } else {
-                throw new \InvalidArgumentException("The specified conf's dir was not found in artgris_file_manager.");
-            }
+            $artgrisConf = $this->get('artgris_bundle_file_manager.service.filemanager_service')->getBasePath(['conf' => $conf]);
+            $destinationFolder = $artgrisConf['dir'];
         }
 
         $flipX = $scaleX !== 1;
@@ -63,7 +60,7 @@ class AjaxController extends Controller
         $extension = $pathinfo['extension'];
 
         if ($src[0] === '/') {
-            $src = urldecode($this->getParameter('kernel.project_dir') . '/' . $fileManager['web_dir'] . $src);
+            $src = urldecode($this->getParameter('kernel.project_dir').'/'.$fileManager['web_dir'].$src);
         }
 
         if (!file_exists($src)) {
@@ -80,17 +77,17 @@ class AjaxController extends Controller
         if ($destinationFolder !== null) {
             $rootdir = $this->getParameter('kernel.root_dir');
 
-            $baseUrl = $rootdir . ' ../' . $fileManager['web_dir'];
+            $baseUrl = $rootdir.' ../'.$fileManager['web_dir'];
             $cropStrAdd = '_crop_';
             $filename = $pathinfo['filename'];
-            $cropPos = strpos($filename, $cropStrAdd);
+            $cropPos = mb_strpos($filename, $cropStrAdd);
             if ($cropPos !== false) {
-                $filename = substr($filename, 0, $cropPos);
+                $filename = mb_substr($filename, 0, $cropPos);
             }
             $croppedPath = $this->getParameter('artgris_media')['cropped_path'];
-            $savedPath = $image->save($rootdir . DIRECTORY_SEPARATOR . $destinationFolder . $croppedPath . urldecode($filename) . $cropStrAdd . uniqid() . '.' . $extension, 'guess', 85);
+            $savedPath = $image->save($rootdir.DIRECTORY_SEPARATOR.$destinationFolder.$croppedPath.urldecode($filename).$cropStrAdd.uniqid().'.'.$extension, 'guess', 85);
 
-            $savedPath = substr($savedPath, strlen($baseUrl));
+            $savedPath = mb_substr($savedPath, mb_strlen($baseUrl));
             if ($savedPath[0] !== '/') {
                 $savedPath = $src;
             }
@@ -102,9 +99,6 @@ class AjaxController extends Controller
             }
         }
 
-
         return new JsonResponse($savedPath);
-
     }
-
 }

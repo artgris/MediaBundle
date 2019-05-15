@@ -3,7 +3,7 @@ services:
         class: Artgris\Bundle\MediaBundle\Service\FileManagerConfigurationService
         tags:
             - { name: twig.extension }
-        arguments: ['@parameter_bag']
+        arguments: ['@artgris_bundle_file_manager.service.filemanager_service', '@parameter_bag']
 
     twig.extension.gimage:
         class: Artgris\Bundle\MediaBundle\Service\GImageTwig
