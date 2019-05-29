@@ -2,6 +2,7 @@
 
 ### Prerequisites
 
+- symfony >= 4.1
 - [artgris/FileManagerBundle](https://github.com/artgris/FileManagerBundle#add-following-configuration-)
 - Assets: 
     - CSS: [bootstrap](http://getbootstrap.com/) and [Font Awesome](http://fontawesome.io/)
