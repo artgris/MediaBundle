@@ -37,8 +37,7 @@ $(function () {
             function applyIFrameEvents($iframe) {
                 $iframe.contents().on('click', '.select', function () {
                     var path = $(this).attr('data-path');
-                    $('#' + $artgrisPath).val(path);
-                    updatePreview(path, $('#preview-' + $artgrisPath));
+                    $('#' + $artgrisPath).val(path).change();
                     $($artgrisTarget).modal('hide')
                 });
             }
@@ -116,8 +115,7 @@ $(function () {
                     },
                     success: function (res) {
                         cropper.destroy();
-                        $pathInput.val(res);
-                        updatePreview(res, $('#preview-' + $pathInput.attr('id')));
+                        $pathInput.val(res).change();
                         $this.modal('hide');
                     },
                     error: function (res) {
@@ -214,8 +212,7 @@ function initFileUpload(selector) {
                     }
 
                     // Update preview
-                    $input.val(file.url);
-                    updatePreview(file.url, $('#preview-' + $input.attr('id')));
+                    $input.val(file.url).change();
 
                     // update iframe
                     $('.iframe').attr('src', function (i, val) {
@@ -244,4 +241,3 @@ function initFileUpload(selector) {
         });
     });
 }
-
