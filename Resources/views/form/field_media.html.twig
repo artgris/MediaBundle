@@ -98,7 +98,7 @@
                 {% if collection %}
                     <div class="col-md-2 p-2 text-center">
                         <div class="btn-group" role="group">
-                            {% block media_buttons %}
+                            {% block media_buttons_collection %}
                                 {% include '@ArtgrisMedia/form/_btn_manager.html.twig' with {'id' : id, 'form' : form, 'conf': conf} only %}
                             {% endblock %}
                         </div>
