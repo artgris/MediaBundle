@@ -1,9 +1,10 @@
 {% block artgris_media_widget %}
 
-    {% import _self as artgris %}
-
     {% spaceless %}
-        {{ artgris.render_media(form, false, form.vars.id, conf) }}
+        {% with {'form': form, 'collection': false, 'id': form.vars.id, 'conf': conf } only %}
+            {{ block('render_media') }}
+        {% endwith %}
+        {{ block('artgris_media_collection_widget') }}
     {% endspaceless %}
 
     {% include '@ArtgrisMedia/form/_modal.html.twig' %}
@@ -13,11 +14,14 @@
 
 {% block artgris_media_collection_widget %}
 
-    {% import _self as artgris %}
-
     {% spaceless %}
         {% if prototype is defined %}
-            {% set attr = attr|merge({'data-prototype': artgris.render_media(prototype, true, form.vars.id, conf)}) %}
+            {% set data_prototype  %}
+                {% with {'form': prototype, 'collection': true, 'id': form.vars.id, 'conf': conf } only %}
+                    {{ block('render_media') }}
+                {% endwith %}
+            {% endset %}
+            {% set attr = attr|merge({'data-prototype': data_prototype}) %}
             {% set attr = attr|merge({'data-prototype-name': prototype.vars.name}) %}
         {% endif %}
         {% set attr = attr|merge({'data-allow-add': allow_add ? 1 : 0}) %}
@@ -30,7 +34,9 @@
 
         <div id="{{ form.vars.id }}" class="artgris-media-list artgris-media-collection" {% for k, v in attr %} {{ k }}="{{ v|e }}"{% endfor %}>
         {% for media in form %}
-            {{ artgris.render_media(media, true, form.vars.id, conf) }}
+            {% with {'form': media, 'collection': true, 'id': form.vars.id, 'conf': conf } only %}
+                {{ block('render_media') }}
+            {% endwith %}
         {% endfor %}
         </div>
 
@@ -41,7 +47,12 @@
 
 {% endblock %}
 
-{% macro render_media(form, collection = true, id, conf) %}
+{#
+{% with {'form': form, 'collection': true, 'id': form.vars.id, 'conf': conf } only %}
+    {{ block('render_media') }}
+{% endwith %}
+#}
+{% block render_media %}
     {% spaceless %}
         <div class="artgris-media container-fluid mb-2 {% if form.vars.errors|length > 0 %}error{% endif %}">
 
@@ -60,38 +71,44 @@
                 {% endif %}
 
                 {% set base_path = form.vars.allow_crop ? get_web_path(conf) : 1 %}
-                <div class="img-preview text-center col-md-2 p-2" id="preview-{{ form.vars.id }}" data-id="{{ id }}" data-conf="{{ conf }}"
-                     data-base-path="{{ base_path }}">
-                    {% set preview = fileIcon(form.vars.data).html %}
-                    {% if form.vars.allow_crop and '<img' in preview and '.svg' not in preview and form.vars.data[:base_path|length] == base_path %}
-                        <a href="#" class="js-crop crop-hover" data-toggle="modal" data-target="#crop-modal-{{ id }}" data-backdrop="static">
-                            <span class=""><i class="fas fa-crop"></i></span>
+                {% block file_preview %}
+                    <div class="img-preview text-center col-md-2 p-2" id="preview-{{ form.vars.id }}" data-id="{{ id }}" data-conf="{{ conf }}"
+                         data-base-path="{{ base_path }}">
+                        {% set preview = fileIcon(form.vars.data).html %}
+                        {% if form.vars.allow_crop and '<img' in preview and '.svg' not in preview and form.vars.data[:base_path|length] == base_path %}
+                            <a href="#" class="js-crop crop-hover" data-toggle="modal" data-target="#crop-modal-{{ id }}" data-backdrop="static">
+                                <span class="artgris-media-crop-wrapper"><i class="fas fa-crop"></i></span>
+                                {{ preview|raw }}
+                            </a>
+                        {% else %}
                             {{ preview|raw }}
-                        </a>
-                    {% else %}
-                        {{ preview|raw }}
-                    {% endif %}
-                </div>
+                        {% endif %}
+                    </div>
+                {% endblock %}
 
-                {% block fields %}
-                    {#label + input#}
-                    <div class="{% if collection %}col-md-6{% else %}col-md-7{% endif %}">
+                {#label + input#}
+                <div class="{% if collection %}col-md-6{% else %}col-md-7{% endif %}">
+                    {% block fields %}
                         <input type="text" class="form-control artgris-media-path" id="{{ form.vars.id }}" name="{{ form.vars.full_name }}"
                                {% if form.vars.required %}required="required"{% endif %} value="{{ form.vars.value }}"
                                placeholder="{{ 'artgris.media.path.placeholder'|trans }}" {{ form.vars.readonly|default ? 'readonly="readonly"' }}>
-                    </div>
-                {% endblock %}
+                    {% endblock %}
+                </div>
 
                 {% if collection %}
                     <div class="col-md-2 p-2 text-center">
                         <div class="btn-group" role="group">
-                            {% include '@ArtgrisMedia/form/_btn_manager.html.twig' with {'id' : id, 'form' : form, 'conf': conf} only %}
+                            {% block media_buttons %}
+                                {% include '@ArtgrisMedia/form/_btn_manager.html.twig' with {'id' : id, 'form' : form, 'conf': conf} only %}
+                            {% endblock %}
                         </div>
                     </div>
                 {% else %}
                     <div class="col-md-3 p-2 text-center">
                         <div class="btn-group artgris-browse-group" role="group">
-                            {% include '@ArtgrisMedia/form/_btn_manager.html.twig' with {'id' : id, 'form' : form, 'conf': conf, 'collection': false} only %}
+                            {% block media_buttons %}
+                                {% include '@ArtgrisMedia/form/_btn_manager.html.twig' with {'id' : id, 'form' : form, 'conf': conf, 'collection': false} only %}
+                            {% endblock %}
                         </div>
                     </div>
                 {% endif %}
@@ -111,4 +128,4 @@
 
         </div>
     {% endspaceless %}
-{% endmacro %}
+{% endblock %}

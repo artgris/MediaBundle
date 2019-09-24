@@ -1,5 +1,5 @@
 .artgris-media .img-preview .fa, .artgris-media .img-preview .far, .artgris-media .img-preview .fas {
-    font-size: 3em;
+    font-size: 2em;
     color: #424242;
 }
 
@@ -87,4 +87,8 @@
 
 .artgris-media.is-dragover .row.border.bg-white {
     background-color: #fffad7 !important;
+}
+
+.artgris-media-crop-wrapper {
+    z-index: 2;
 }
