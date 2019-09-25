@@ -6,7 +6,7 @@ $(function () {
 
     $document
         .on('click', '.btn-manager', function () {
-            $artgrisPath = $(this).attr('data-id');
+            $artgrisPath = $(this).closest('.artgris-media').find('.artgris-media-path');
             $artgrisTarget = $(this).attr('data-target');
             var $iframe = $($artgrisTarget).find('.iframe');
             if (!$iframe.attr('src')) {
@@ -25,7 +25,7 @@ $(function () {
         .on('change', '.artgris-media-path', function (e) {
             var path = $(this).val();
             var id = $(this).attr('id');
-            updatePreview(path, $('#preview-' + id));
+            updatePreview(path, $(this).closest('.artgris-media').find('.img-preview'));
         })
         .on('show.bs.modal', '.modal.artgris-media-modal', function() {
             var $iframe = $(this).find('.iframe');
@@ -37,7 +37,7 @@ $(function () {
             function applyIFrameEvents($iframe) {
                 $iframe.contents().on('click', '.select', function () {
                     var path = $(this).attr('data-path');
-                    $('#' + $artgrisPath).val(path).change();
+                    $artgrisPath.val(path).change();
                     $($artgrisTarget).modal('hide')
                 });
             }

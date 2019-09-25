@@ -157,7 +157,7 @@ E.g:
 {{ gImage(news.image).zoomCrop(100, 100) }}
 ```
 
-### Changed cropping path
+### Changing cropping path
     
 add config/packages/artgris_media.yaml
     
