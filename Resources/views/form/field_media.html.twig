@@ -4,7 +4,6 @@
         {% with {'form': form, 'collection': false, 'id': form.vars.id, 'conf': conf } only %}
             {{ block('render_media') }}
         {% endwith %}
-        {{ block('artgris_media_collection_widget') }}
     {% endspaceless %}
 
     {% include '@ArtgrisMedia/form/_modal.html.twig' %}
