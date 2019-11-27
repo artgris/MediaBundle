@@ -75,6 +75,10 @@ class AjaxController extends Controller
         $savedPath = '/';
 
         if ($destinationFolder !== null) {
+
+            if (substr($destinationFolder, -1) !== DIRECTORY_SEPARATOR) {
+                $destinationFolder .= DIRECTORY_SEPARATOR;
+            }
             $rootdir = $this->getParameter('kernel.root_dir');
 
             $baseUrl = $rootdir.' ../'.$fileManager['web_dir'];
