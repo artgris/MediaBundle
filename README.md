@@ -163,3 +163,8 @@ add config/packages/artgris_media.yaml
     
     artgris_media:
         cropped_path: "cropped/" #default value
+        
+        
+### Demo Application
+
+[MediaBundleDemo](https://github.com/artgris/MediaBundleDemo) is a complete Symfony application created to showcase MediaBundle features.
