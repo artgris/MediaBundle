@@ -23,7 +23,7 @@
     "php": ">=7.0.0",
     "doctrine/orm": "^2.5",
     "doctrine/doctrine-bundle": "^1.8|^2.0",
-    "gregwar/image-bundle": "^2.2",
+    "gregwar/image-bundle": "^2.2|^3.0",
     "artgris/filemanager-bundle": "^1.5 || dev-master",
     "symfony/config": "^4.1",
     "symfony/dependency-injection": "^4.1",
