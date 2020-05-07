@@ -22,7 +22,7 @@
   "require": {
     "php": ">=7.0.0",
     "doctrine/orm": "^2.5",
-    "doctrine/doctrine-bundle": "~1.0|~2.0",
+    "doctrine/doctrine-bundle": "^1.8|^2.0",
     "gregwar/image-bundle": "^2.2",
     "artgris/filemanager-bundle": "^1.5 || dev-master",
     "symfony/config": "^4.1",
