@@ -147,6 +147,8 @@ Like regular collections, you can edit entries options, i.e to enable alts:
 
 ### Gregwar Image Bundle Integration
 
+> :warning: **not working** Waiting symfony 5 support: https://github.com/Gregwar/ImageBundle/issues/119
+
 This bundle relies on [Gregwar/ImageBundle](https://github.com/Gregwar/ImageBundle) to crop, mirror and scale images.
 
 If you need to manually crop image in twig (if they are too large for example), instead of using the `image` and `web_image` functions, you should `gImage`, which works the same as `image` but improves compatibility.
