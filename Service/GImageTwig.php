@@ -2,40 +2,28 @@
 
 namespace Artgris\Bundle\MediaBundle\Service;
 
-use Gregwar\ImageBundle\Services\ImageHandling;
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFunction;
 
 /**
  * ImageTwig extension.
  */
-class GImageTwig extends \Twig_Extension
+class GImageTwig extends AbstractExtension
 {
-    /**
-     * @var ImageHandling
-     */
-    private $imageHandling;
-
-    /**
-     * @param ImageHandling $imageHandling
-     */
-    public function __construct(ImageHandling $imageHandling)
-    {
-        $this->imageHandling = $imageHandling;
-    }
-
     /**
      * {@inheritdoc}
      */
     public function getFunctions()
     {
         return [
-            new \Twig_SimpleFunction('gImage', [$this, 'image'], ['is_safe' => ['html']]),
+            new TwigFunction('gImage', [$this, 'image'], ['is_safe' => ['html']]),
         ];
     }
 
     /**
      * @param string $path
      *
-     * @return object
+     * @return string
      */
     public function image($path)
     {
@@ -43,6 +31,6 @@ class GImageTwig extends \Twig_Extension
             $path = urldecode(mb_substr($path, 1));
         }
 
-        return $this->imageHandling->open($path);
+        return $path;
     }
 }
