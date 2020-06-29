@@ -2,21 +2,42 @@
 
 namespace Artgris\Bundle\MediaBundle\Controller;
 
+use Artgris\Bundle\FileManagerBundle\Service\FilemanagerService;
+use Artgris\Bundle\FileManagerBundle\Service\FileTypeService;
 use Gregwar\Image\Image;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Annotation\Route;
 
-class AjaxController extends Controller
+class AjaxController extends AbstractController
 {
+    /**
+     * @var FileTypeService
+     */
+    private $fileTypeService;
+    /**
+     * @var FilemanagerService
+     */
+    private $filemanagerService;
+
+    /**
+     * AjaxController constructor.
+     */
+    public function __construct(FileTypeService $fileTypeService, FilemanagerService $filemanagerService)
+    {
+        $this->fileTypeService = $fileTypeService;
+        $this->filemanagerService = $filemanagerService;
+    }
+
+
     /**
      * @Route("/ajax-icon/", name="admin_ajax_icon", defaults={"filename" = null})
      */
     public function ajaxIcon(Request $request)
     {
         $filePath = $request->query->get('path');
-        $iconData = $this->get('file_type_service')->fileIcon($filePath);
+        $iconData = $this->fileTypeService->fileIcon($filePath);
 
         return new JsonResponse(['icon' => $iconData]);
     }
@@ -42,7 +63,7 @@ class AjaxController extends Controller
 
         $destinationFolder = null;
         if ($conf !== null) {
-            $artgrisConf = $this->get('artgris_bundle_file_manager.service.filemanager_service')->getBasePath(['conf' => $conf]);
+            $artgrisConf = $this->filemanagerService->getBasePath(['conf' => $conf]);
             $destinationFolder = $artgrisConf['dir'];
         }
 
@@ -79,7 +100,7 @@ class AjaxController extends Controller
             if (substr($destinationFolder, -1) !== DIRECTORY_SEPARATOR) {
                 $destinationFolder .= DIRECTORY_SEPARATOR;
             }
-            $rootdir = $this->getParameter('kernel.root_dir');
+            $rootdir = $this->getParameter('kernel.project_dir').'/src';
 
             $baseUrl = $rootdir.' ../'.$fileManager['web_dir'];
             $cropStrAdd = '_crop_';

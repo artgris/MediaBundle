@@ -1,10 +1,10 @@
 {% block artgris_media_widget %}
 
-    {% spaceless %}
+    {% apply spaceless %}
         {% with {'form': form, 'collection': false, 'id': form.vars.id, 'conf': conf } only %}
             {{ block('render_media') }}
         {% endwith %}
-    {% endspaceless %}
+    {% endapply %}
 
     {% include '@ArtgrisMedia/form/_modal.html.twig' %}
     {% include '@ArtgrisMedia/form/_crop_modal.html.twig' with {crop_options: form.vars.crop_options} %}
@@ -13,7 +13,7 @@
 
 {% block artgris_media_collection_widget %}
 
-    {% spaceless %}
+    {% apply spaceless %}
         {% if prototype is defined %}
             {% set data_prototype  %}
                 {% with {'form': prototype, 'collection': true, 'id': form.vars.id, 'conf': conf } only %}
@@ -42,7 +42,7 @@
         {% include '@ArtgrisMedia/form/_modal.html.twig' %}
         {% include '@ArtgrisMedia/form/_crop_modal.html.twig' with {crop_options: form.vars.prototype.vars.crop_options} %}
 
-    {% endspaceless %}
+    {% endapply %}
 
 {% endblock %}
 
@@ -52,7 +52,7 @@
 {% endwith %}
 #}
 {% block render_media %}
-    {% spaceless %}
+    {% apply spaceless %}
         <div class="artgris-media container-fluid mb-2 {% if form.vars.errors|length > 0 %}error{% endif %}">
 
             <div class="row border bg-white align-items-center p-2">
@@ -126,5 +126,5 @@
             {% endif %}
 
         </div>
-    {% endspaceless %}
+    {% endapply %}
 {% endblock %}

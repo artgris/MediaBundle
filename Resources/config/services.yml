@@ -1,12 +1,20 @@
 services:
+
+    _defaults:
+        autowire: true      # Automatically injects dependencies in your services.
+        autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
+
+    Artgris\Bundle\MediaBundle\Controller\:
+        resource: '../../Controller/*'
+
+
     filemanager_configuration:
         class: Artgris\Bundle\MediaBundle\Service\FileManagerConfigurationService
         tags:
             - { name: twig.extension }
-        arguments: ['@artgris_bundle_file_manager.service.filemanager_service', '@parameter_bag']
+        arguments: ['@Artgris\Bundle\FileManagerBundle\Service\FilemanagerService', '@parameter_bag']
 
     twig.extension.gimage:
         class: Artgris\Bundle\MediaBundle\Service\GImageTwig
-        arguments: ['@image.handling']
         tags:
             - { name: twig.extension }

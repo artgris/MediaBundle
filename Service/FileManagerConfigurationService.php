@@ -4,8 +4,10 @@ namespace Artgris\Bundle\MediaBundle\Service;
 
 use Artgris\Bundle\FileManagerBundle\Service\FilemanagerService;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFunction;
 
-class FileManagerConfigurationService extends \Twig_Extension
+class FileManagerConfigurationService extends AbstractExtension
 {
     /**
      * @var FilemanagerService
@@ -41,13 +43,14 @@ class FileManagerConfigurationService extends \Twig_Extension
         return mb_substr($confPath, mb_strlen($publicDir));
     }
 
+
     /**
-     * @return array|\Twig_Function[]
+     * {@inheritdoc}
      */
     public function getFunctions(): array
     {
         return [
-            new \Twig_SimpleFunction('get_web_path', [$this, 'getWebPath']),
+            new TwigFunction('get_web_path', [$this, 'getWebPath']),
         ];
     }
 }
