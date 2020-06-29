@@ -14,7 +14,7 @@ services:
             - { name: twig.extension }
         arguments: ['@Artgris\Bundle\FileManagerBundle\Service\FilemanagerService', '@parameter_bag']
 
-    twig.extension.gimage:
-        class: Artgris\Bundle\MediaBundle\Service\GImageTwig
+    twig.extension.rs_image:
+        class: Artgris\Bundle\MediaBundle\Service\RSlashTwig
         tags:
             - { name: twig.extension }
