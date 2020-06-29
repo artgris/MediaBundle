@@ -8,7 +8,7 @@ use Twig\TwigFunction;
 /**
  * ImageTwig extension.
  */
-class GImageTwig extends AbstractExtension
+class RSlashTwig extends AbstractExtension
 {
     /**
      * {@inheritdoc}
@@ -16,7 +16,7 @@ class GImageTwig extends AbstractExtension
     public function getFunctions()
     {
         return [
-            new TwigFunction('gImage', [$this, 'image'], ['is_safe' => ['html']]),
+            new TwigFunction('rSlash', [$this, 'rSlash'], ['is_safe' => ['html']]),
         ];
     }
 
@@ -25,7 +25,7 @@ class GImageTwig extends AbstractExtension
      *
      * @return string
      */
-    public function image($path)
+    public function rSlash($path)
     {
         if ($path !== null && $path[0] === '/') {
             $path = urldecode(mb_substr($path, 1));
