@@ -26,7 +26,9 @@ class ImageValidator extends ConstraintValidator
 
     private function checkExtension(Constraint $constraint, string $path): void
     {
-        $extension = mb_strtolower(pathinfo($path, PATHINFO_EXTENSION));
+        if ($path = parse_url($path)) {
+            $extension = mb_strtolower(pathinfo($path['path'], PATHINFO_EXTENSION));
+        }
 
         if (!\in_array($extension, self::SUPPORTED_EXTENSIONS)) {
             $this->context->buildViolation($constraint->message)->addViolation();
