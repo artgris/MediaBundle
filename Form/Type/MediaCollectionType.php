@@ -47,6 +47,7 @@ class MediaCollectionType extends CollectionType implements DataTransformerInter
             'add_at_the_end' => true,
             'tree' => 0,
             'error_bubbling' => false,
+            'extra' => [],
         ]);
 
         $resolver->setRequired('conf');
@@ -65,6 +66,7 @@ class MediaCollectionType extends CollectionType implements DataTransformerInter
             'data_add_at_the_end' => $options['add_at_the_end'],
             'conf' => $options['conf'],
             'tree' => $options['tree'],
+            'extra' => $options['extra'],
         ]);
     }
 
