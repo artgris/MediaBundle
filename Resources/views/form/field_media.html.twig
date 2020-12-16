@@ -72,7 +72,7 @@
                 {% set base_path = form.vars.allow_crop ? get_web_path(conf, extra) : 1 %}
                 {% block file_preview %}
                     <div class="img-preview text-center col-md-2 p-2" id="preview-{{ form.vars.id }}" data-id="{{ id }}" data-conf="{{ conf }}"
-                         data-base-path="{{ base_path }}">
+                        data-extra="{{ extra|json_encode }}" data-base-path="{{ base_path }}">
                         {% set preview = fileIcon(form.vars.data).html %}
                         {% if form.vars.allow_crop and '<img' in preview and '.svg' not in preview and form.vars.data[:base_path|length] == base_path %}
                             <a href="#" class="js-crop crop-hover" data-toggle="modal" data-target="#crop-modal-{{ id }}" data-backdrop="static">

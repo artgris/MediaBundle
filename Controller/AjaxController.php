@@ -58,12 +58,13 @@ class AjaxController extends AbstractController
         $scaleY = $post->getInt('scaleY', 1);
         $rotate = $post->getInt('rotate');
         $conf = $post->get('conf');
+        $extra = $post->get('extra');
 
         $fileManager = $this->getParameter('artgris_file_manager');
 
         $destinationFolder = null;
         if ($conf !== null) {
-            $artgrisConf = $this->filemanagerService->getBasePath(['conf' => $conf]);
+            $artgrisConf = $this->filemanagerService->getBasePath(['conf' => $conf, 'extra' => $extra ?? []]);
             $destinationFolder = $artgrisConf['dir'];
         }
 
