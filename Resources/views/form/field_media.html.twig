@@ -33,7 +33,7 @@
 
         <div id="{{ form.vars.id }}" class="artgris-media-list artgris-media-collection" {% for k, v in attr %} {{ k }}="{{ v|e }}"{% endfor %}>
         {% for media in form %}
-            {% with {'form': media, 'collection': true, 'id': form.vars.id, 'conf': conf } only %}
+            {% with {'form': media, 'collection': true, 'id': form.vars.id, 'conf': conf, 'extra': extra } only %}
                 {{ block('render_media') }}
             {% endwith %}
         {% endfor %}
