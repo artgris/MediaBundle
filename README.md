@@ -114,7 +114,7 @@ $builder
 
 **MediaType:**
 - `'conf' => 'yourconf'` (**required**) specifies a configuration defined in the FileManager. For more informations about media configurations, [refer to FileManagerBundle's documentation](https://github.com/artgris/FileManagerBundle#add-following-configuration-)
-- `'extra' => []'` (only with FileManagerBundle Service Configuration) [Extra Url parameters injections](https://github.com/artgris/FileManagerBundle/blob/master/Resources/doc/book/2-service-configuration.md#extra-url-parameters-injections)
+- `'extra' => []` (only with FileManagerBundle Service Configuration) [Extra Url parameters injections](https://github.com/artgris/FileManagerBundle/blob/master/Resources/doc/book/2-service-configuration.md#extra-url-parameters-injections)
 - `'readonly' => false` prevents the user from manually changing the path (it only adds a "readonly" attribute to the corresponding HTML input)
 - `'allow_crop' => true` allows the user to edit the image using [fengyuanchen/cropper](https://github.com/fengyuanchen/cropper)
 - `'crop_options' => array` if `allow_crop` is set to `true`, allows to specify extra crop options. The default options:
