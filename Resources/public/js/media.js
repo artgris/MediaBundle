@@ -50,6 +50,7 @@ $(function () {
             var $imgPreview = $(e.relatedTarget).closest('.img-preview');
             var src = $imgPreview.find('img').attr('src');
             var conf = $imgPreview.data('conf');
+            var extra = $imgPreview.data('extra');
             var $pathInput = $(e.relatedTarget).closest('.artgris-media').find('.artgris-media-path');
             var $cropContainer = $this.find('.modal-crop-container');
             var $modalBody = $this.find('.modal-body');
@@ -103,6 +104,7 @@ $(function () {
                     type: "post",
                     data: {
                         conf: conf,
+                        extra: extra,
                         src: src,
                         x: Math.round(data.x),
                         y: Math.round(data.y),

@@ -25,9 +25,9 @@ class FileManagerConfigurationService extends AbstractExtension
         $this->artgrisFileManagerConfig = $parameterBag->get('artgris_file_manager');
     }
 
-    public function getWebPath(string $conf)
+    public function getWebPath(string $conf, array $extra = [])
     {
-        $dirPath = $this->filemanagerService->getBasePath(['conf' => $conf]);
+        $dirPath = $this->filemanagerService->getBasePath(['conf' => $conf, 'extra' => $extra]);
 
         if (!isset($dirPath)) {
             throw new \InvalidArgumentException("The conf \"$conf\" was not found in artgris_file_manager.");

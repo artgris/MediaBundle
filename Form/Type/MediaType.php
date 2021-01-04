@@ -17,6 +17,7 @@ class MediaType extends AbstractType
         $view->vars = array_replace($view->vars, [
             'conf' => $options['conf'],
             'tree' => $options['tree'],
+            'extra' => $options['extra'],
             'readonly' => $options['readonly'],
             'allow_crop' => $options['allow_crop'],
             'crop_options' => $options['crop_options'],
@@ -40,6 +41,7 @@ class MediaType extends AbstractType
             'tree' => 0,
             'error_bubbling' => false,
             'display_file_manager' => true,
+            'extra' => [],
         ]);
 
         $resolver->setRequired('conf');
