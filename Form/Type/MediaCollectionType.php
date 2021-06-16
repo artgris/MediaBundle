@@ -92,8 +92,6 @@ class MediaCollectionType extends CollectionType implements DataTransformerInter
             return null;
         }
 
-        return array_filter(($value instanceof Collection) ? $value->toArray() : $value, function ($path) {
-            return $path !== null;
-        });
+        return array_values(array_filter(($value instanceof Collection) ? $value->toArray() : $value));
     }
 }
