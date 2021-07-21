@@ -15,7 +15,7 @@
 
     {% apply spaceless %}
         {% if prototype is defined %}
-            {% set data_prototype  %}
+            {% set data_prototype %}
                 {% with {'form': prototype, 'collection': true, 'id': form.vars.id, 'conf': conf, 'extra': extra } only %}
                     {{ block('render_media') }}
                 {% endwith %}
@@ -40,7 +40,10 @@
         </div>
 
         {% include '@ArtgrisMedia/form/_modal.html.twig' %}
-        {% include '@ArtgrisMedia/form/_crop_modal.html.twig' with {crop_options: form.vars.prototype.vars.crop_options} %}
+        {% set crop_options = prototype is defined ? prototype.vars.crop_options : (form.children|first).vars.crop_options|default %}
+        {% if crop_options %}
+            {% include '@ArtgrisMedia/form/_crop_modal.html.twig' with {crop_options: crop_options} %}
+        {% endif %}
 
     {% endapply %}
 
@@ -72,10 +75,11 @@
                 {% set base_path = form.vars.allow_crop ? get_web_path(conf, extra) : 1 %}
                 {% block file_preview %}
                     <div class="img-preview text-center col-md-2 p-2" id="preview-{{ form.vars.id }}" data-id="{{ id }}" data-conf="{{ conf }}"
-                        data-extra="{{ extra|json_encode }}" data-base-path="{{ base_path }}">
+                         data-extra="{{ extra|json_encode }}" data-base-path="{{ base_path }}">
                         {% set preview = fileIcon(form.vars.data).html %}
                         {% if form.vars.allow_crop and '<img' in preview and '.svg' not in preview and form.vars.data[:base_path|length] == base_path %}
-                            <a href="#" class="js-crop crop-hover" data-toggle="modal"  data-bs-toggle="modal" data-target="#crop-modal-{{ id }}" data-bs-target="#crop-modal-{{ id }}" data-backdrop="static">
+                            <a href="#" class="js-crop crop-hover" data-toggle="modal" data-bs-toggle="modal" data-target="#crop-modal-{{ id }}"
+                               data-bs-target="#crop-modal-{{ id }}" data-backdrop="static">
                                 <span class="artgris-media-crop-wrapper"><i class="fas fa-crop"></i></span>
                                 {{ preview|raw }}
                             </a>
@@ -85,7 +89,7 @@
                     </div>
                 {% endblock %}
 
-                {#label + input#}
+                {# label + input #}
                 <div class="{% if collection %}col-md-6{% else %}col-md-7{% endif %}">
                     {% block fields %}
                         <input type="text" class="form-control artgris-media-path" id="{{ form.vars.id }}" name="{{ form.vars.full_name }}"
@@ -113,7 +117,8 @@
                 {% endif %}
                 {% if collection %}
                     <div class="col-md-1 p-0 align-top order-md-last order-first">
-                        <a href="#" class="float-right js-remove-collection artgris-collection-remove btn btn-sm btn-danger collection-remove collection-action">
+                        <a href="#"
+                           class="float-right js-remove-collection artgris-collection-remove btn btn-sm btn-danger collection-remove collection-action">
                             <span class="fas fa-times"></span></a>
                     </div>
                 {% endif %}
