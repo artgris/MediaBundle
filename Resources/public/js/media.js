@@ -173,7 +173,7 @@ function updatePreview(path, dest) {
             var basePath = dest.data('base-path');
             if (res.icon.html.indexOf('<img') !== -1 && res.icon.html.indexOf('.svg') === -1 && path.indexOf(basePath) === 0) {
                 var id = dest.data('id');
-                dest.html('<a href="#" class="js-crop crop-hover" data-toggle="modal" data-backdrop="static" data-target="#crop-modal-' + id + '"><span class="artgris-media-crop-wrapper"><i class="fas fa-crop"></i></span>'+res.icon.html+'</a>');
+                dest.html('<a href="#" class="js-crop crop-hover" data-toggle="modal" data-bs-toggle="modal" data-backdrop="static" data-target="#crop-modal-' + id + '" data-bs-target="#crop-modal-' + id +'"><span class="artgris-media-crop-wrapper"><i class="fas fa-crop"></i></span>'+res.icon.html+'</a>');
             } else {
                 dest.html(res.icon.html);
             }
