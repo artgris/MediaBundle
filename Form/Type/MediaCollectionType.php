@@ -2,6 +2,7 @@
 
 namespace Artgris\Bundle\MediaBundle\Form\Type;
 
+use Doctrine\Common\Collections\Collection;
 use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\FormBuilderInterface;
