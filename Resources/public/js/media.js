@@ -27,7 +27,7 @@ $(function () {
             var id = $(this).attr('id');
             updatePreview(path, $(this).closest('.artgris-media').find('.img-preview'));
         })
-        .on('show.bs.modal', '.modal.artgris-media-modal', function() {
+        .on('show.bs.modal', '.modal.artgris-media-modal', function () {
             var $iframe = $(this).find('.iframe');
             $iframe.on('load', function () {
                 applyIFrameEvents($(this));
@@ -42,10 +42,10 @@ $(function () {
                 });
             }
         })
-        .on('show.bs.modal', '.modal.artgris-media-crop-modal', function(e) {
+        .on('show.bs.modal', '.modal.artgris-media-crop-modal', function (e) {
             $(this).find('.modal-body').hide();
         })
-        .on('shown.bs.modal', '.modal.artgris-media-crop-modal', function(e) {
+        .on('shown.bs.modal', '.modal.artgris-media-crop-modal', function (e) {
             var $this = $(this);
             var $imgPreview = $(e.relatedTarget).closest('.img-preview');
             var src = $imgPreview.find('img').attr('src');
@@ -173,7 +173,7 @@ function updatePreview(path, dest) {
             var basePath = dest.data('base-path');
             if (res.icon.html.indexOf('<img') !== -1 && res.icon.html.indexOf('.svg') === -1 && path.indexOf(basePath) === 0) {
                 var id = dest.data('id');
-                dest.html('<a href="#" class="js-crop crop-hover" data-toggle="modal" data-bs-toggle="modal" data-backdrop="static" data-target="#crop-modal-' + id + '" data-bs-target="#crop-modal-' + id +'"><span class="artgris-media-crop-wrapper"><i class="fas fa-crop"></i></span>'+res.icon.html+'</a>');
+                dest.html('<a href="#" class="js-crop crop-hover" data-toggle="modal" data-bs-toggle="modal" data-backdrop="static" data-target="#crop-modal-' + id + '" data-bs-target="#crop-modal-' + id + '"><span class="artgris-media-crop-wrapper"><i class="fas fa-crop"></i></span>' + res.icon.html + '</a>');
             } else {
                 dest.html(res.icon.html);
             }
@@ -201,7 +201,7 @@ function initFileUpload(selector) {
 
                     var $input = null;
                     if (data.originalFiles.length > 1) {
-                        $unusedPaths = $(e.target).closest('.artgris-media-collection').find('input.artgris-media-path').filter(function() {
+                        $unusedPaths = $(e.target).closest('.artgris-media-collection').find('input.artgris-media-path').filter(function () {
                             return !this.value;
                         });
                         if ($unusedPaths.length > 0) {
@@ -222,7 +222,7 @@ function initFileUpload(selector) {
                     });
                 } else if (file.error) {
                     displayError('<strong>' + file.name + '</strong> ' + file.error);
-                    $unusedPaths = $(e.target).closest('.artgris-media-collection').find('input.artgris-media-path').filter(function() {
+                    $unusedPaths = $(e.target).closest('.artgris-media-collection').find('input.artgris-media-path').filter(function () {
                         return !this.value;
                     });
                     $unusedPaths.closest('.artgris-media').find('.js-remove-collection').click();
@@ -232,6 +232,31 @@ function initFileUpload(selector) {
             $.each(data.files, function () {
                 displayError('File upload failed.');
             });
+        }).on('fileuploadprogressall', function (e, data) {
+
+            if (e.isDefaultPrevented()) {
+                return false;
+            }
+            var progress = Math.floor((data.loaded / data.total) * 100);
+
+            var $progressBar = $(this).closest('.artgris-media').find('.progress-bar');
+            $progressBar.removeClass('d-none');
+            $progressBar
+                .removeClass("notransition")
+                .attr('aria-valuenow', progress)
+                .css('width', progress + '%');
+
+        }).on('fileuploadstop', function (e) {
+            if (e.isDefaultPrevented()) {
+                return false;
+            }
+            var $progressBar = $(this).closest('.artgris-media').find('.progress-bar');
+            $progressBar.addClass('d-none');
+            $progressBar
+                .addClass("notransition")
+                .attr('aria-valuenow', 0)
+                .css('width', 0 + '%');
+
         }).on('fileuploadchange', function (e, data) {
             var $collection = $(e.target).closest('.artgris-media-collection');
 

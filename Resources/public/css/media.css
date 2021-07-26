@@ -92,3 +92,10 @@
 .artgris-media-crop-wrapper {
     z-index: 2;
 }
+
+.progress {
+    height: 5px;
+    margin-bottom: 0;
+    border-radius: 0;
+    background-color: transparent;
+}

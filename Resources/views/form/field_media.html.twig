@@ -96,6 +96,9 @@
                                {% if form.vars.required %}required="required"{% endif %} value="{{ form.vars.value }}"
                                placeholder="{{ 'artgris.media.path.placeholder'|trans }}" {{ form.vars.readonly|default ? 'readonly="readonly"' }}>
                     {% endblock %}
+                    <div class="progress">
+                        <div class="progress-bar" role="progressbar" style="width: 0" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
                 </div>
 
                 {% if collection %}
