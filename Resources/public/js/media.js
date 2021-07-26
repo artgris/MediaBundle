@@ -239,9 +239,8 @@ function initFileUpload(selector) {
             }
             var progress = Math.floor((data.loaded / data.total) * 100);
 
-            var $progressBar = $(this).closest('.artgris-media').find('.progress-bar');
-            $progressBar.removeClass('d-none');
-            $progressBar
+            $(this).closest('.artgris-media').find('.progress-bar')
+                .removeClass('d-none')
                 .removeClass("notransition")
                 .attr('aria-valuenow', progress)
                 .css('width', progress + '%');
@@ -250,9 +249,8 @@ function initFileUpload(selector) {
             if (e.isDefaultPrevented()) {
                 return false;
             }
-            var $progressBar = $(this).closest('.artgris-media').find('.progress-bar');
-            $progressBar.addClass('d-none');
-            $progressBar
+            $(this).closest('.artgris-media').find('.progress-bar')
+                .addClass('d-none')
                 .addClass("notransition")
                 .attr('aria-valuenow', 0)
                 .css('width', 0 + '%');
