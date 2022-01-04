@@ -1,5 +1,7 @@
 ## artgris/MediaBundle - Easier Symfony Media Management
 
+> A more modern alternative of this bundle exists: Arkounay ux-media bundle - Symfony UX async document upload type using ArtgrisFileManager : https://github.com/Arkounay/ux-media
+
 ### Prerequisites
 
 - symfony >= 4.1
