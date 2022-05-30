@@ -39,6 +39,7 @@ $(function () {
                     var path = $(this).attr('data-path');
                     $artgrisPath.val(path).change();
                     $($artgrisTarget).modal('hide')
+                    $('.modal-backdrop').remove();
                 });
             }
         })
