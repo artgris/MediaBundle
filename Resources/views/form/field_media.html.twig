@@ -76,7 +76,7 @@
                 {% block file_preview %}
                     <div class="img-preview text-center col-md-2 p-2" id="preview-{{ form.vars.id }}" data-id="{{ id }}" data-conf="{{ conf }}"
                          data-extra="{{ extra|json_encode }}" data-base-path="{{ base_path }}">
-                        {% set preview = fileIcon(form.vars.data).html %}
+                        {% set preview = fileIcon(form.vars.data|trim).html %}
                         {% if form.vars.allow_crop and '<img' in preview and '.svg' not in preview and form.vars.data[:base_path|length] == base_path %}
                             <a href="#" class="js-crop crop-hover" data-toggle="modal" data-bs-toggle="modal" data-target="#crop-modal-{{ id }}"
                                data-bs-target="#crop-modal-{{ id }}" data-backdrop="static">
